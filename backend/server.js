@@ -1,3 +1,4 @@
+require('dotenv').config();
 const http = require('http');
 const app = require('./app');
 
@@ -12,7 +13,7 @@ const normalizePort = val => {
     }
     return false;
 };
-const port = normalizePort(process.env.PORT ||  '3000');
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 const errorHandler = error => {
@@ -23,11 +24,11 @@ const errorHandler = error => {
     const bind = typeof address === 'string' ? 'pipe ' + address : 'port: ' + port;
     switch (error.code) {
         case 'EACCES':
-            console.error(bind + ' requires elevated privileges.');
+            console.error(bind + ' nécessite des privilèges élevés');
             process.exit(1);
             break;
         case 'EADDRINUSE':
-            console.error(bind + ' is already in use.');
+            console.error(bind + ' déjà utilisé');
             process.exit(1);
             break;
         default:
@@ -41,7 +42,7 @@ server.on('error', errorHandler);
 server.on('listening', () => {
     const address = server.address();
     const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
-    console.log('Listening on ' + bind);
+    console.log('Serveur lancé, écoute sur le ' + bind);
 });
 
 server.listen(port);

@@ -24,20 +24,22 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-    Employee.findOne({ email: req.body.email })
-        .then(user => {
-            if (!user) {
+    Employee.findOne({ where: { email: req.body.email } })
+        .then(employeeFound => {
+            if (!employeeFound) {
                 return res.status(401).json({ message: 'Utilisateur non trouvé !' });
             }
-            bcrypt.compare(req.body.password, user.password)
+            console.log(req.body.password);
+            console.log(employeeFound.password);
+            bcrypt.compare(req.body.password, employeeFound.password)
                 .then(valid => {
                     if (!valid) {
                         return res.status(401).json({ message: 'Mot de passe incorrect !' });
                     }
                     res.status(200).json({
-                        userId: user._id,
-                        token: jwt.sign({ userId: user._id },
-                            process.env.TOKEN_SECRET, { expiresIn: '24h' }
+                        id: employeeFound.id,
+                        token: jwt.sign({ id: employeeFound.id },
+                            process.env.SECRET_TOKEN, { expiresIn: '12h' }
                         )
                     });
                 })

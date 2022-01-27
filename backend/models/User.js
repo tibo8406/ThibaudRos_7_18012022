@@ -1,6 +1,6 @@
 const Db = require('../db/db');
 
-const userSchema = Db.define("user", {
+const employeeSchema = Db.define("employees", {
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     nom: { type: String, required: true },
@@ -10,4 +10,4 @@ const userSchema = Db.define("user", {
 
 //userSchema.plugin(uniqueValidator);
 
-module.exports = userSchema;
+module.exports = employeeSchema;

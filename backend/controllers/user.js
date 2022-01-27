@@ -1,28 +1,30 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const Db = require('../db/db');
-const User = require('../models/User');
-
+const Employee = require('../models/User');
 
 exports.signup = (req, res, next) => {
+    const employeeEmail = Employee.findOne({ where: { email: req.body.email } })
+    if (employeeEmail != null) {
+        console.log("Utilisateur existant !");
+        return res.status(401).json({ message: 'Utilisateur existant !' }); //bon code erreur ?
+    }
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
-            const userToCreate = User.build({
+            const employeeToCreate = Employee.build({
                 email: req.body.email,
                 password: hash,
                 nom: req.body.nom,
                 prenom: req.body.prenom,
                 poste: req.body.poste
             });
-            userToCreate.save();
+            employeeToCreate.save();
             res.status(201).json({ message: 'Utilisateur créé !' });
         })
         .catch(error => res.status(500).json({ message: 'erreur' }));
 };
 
-
 exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email })
+    Employee.findOne({ email: req.body.email })
         .then(user => {
             if (!user) {
                 return res.status(401).json({ message: 'Utilisateur non trouvé !' });

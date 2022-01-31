@@ -3,46 +3,15 @@
     <div id="header">
       <img alt="Logo Groupomania" src="../assets/icon-above-font.png" />
       <p>Bienvenue sur le réseau social de la société Groupamania Home</p>
-      <li class="option">
-        <router-link to="/signup">S'inscrire</router-link>
-      </li>
-      <li class="option">
-        <router-link to="/login">Se connecter</router-link>
-      </li>
-      <li class="option">
-        <router-link to="/socialgroup">Réseau Social</router-link>
-      </li>
-
-      <router-view></router-view>
-
-      <!--<div class="form_">
+      <div class="form_">
         <div class="form_option">
-          <li class="option active"><router-link to="/signup">S'inscrire</router-link></li>
-          <li class="option"><router-link to="/login">Se connecter</router-link></li>
+          <li class="option"><router-link to="/signup">S'inscrire</router-link></li>
+          <li class="option active"><router-link to="/login">Se connecter</router-link></li>
         </div>
         <div class="form_title">
-          <h1>Inscription</h1>
+          <h1>Connexion</h1>
         </div>
         <form action="/" method="post">
-          <div class="ligne2champs">
-            <input type="text" id="nom" name="Nom" placeholder="Nom" required />
-            <input
-              type="text"
-              id="prenom"
-              name="prenom"
-              placeholder="Prenom"
-              required
-            />
-          </div>
-          <div class="ligne1champs">
-            <input
-              type="text"
-              id="poste"
-              name="poste"
-              placeholder="Poste"
-              required
-            />
-          </div>
           <div class="ligne1champs">
             <input
               type="text"
@@ -66,12 +35,12 @@
             <a href="/forgot">Mot de passe oublié ?</a>
           </div>
           <div class="button">
-            <button class="submit"><a href="#">S'inscrire</a></button>
+            <a href="#"><button class="submit">Se connecter</button></a>
           </div>
         </form>
       </div>
 
-      <router-view></router-view>-->
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -81,7 +50,6 @@
 </script>
 
 <style lang="scss">
-
 #header {
   justify-items: center;
   padding: 0px 15px 0px 15px;
@@ -91,10 +59,7 @@ img {
   max-width: 400px;
   justify-items: center;
 }
-#router-link {
-  background: #fc2e07;
-  color: white;
-}
+
 .form_ {
   display: block;
   max-width: 500px;
@@ -148,7 +113,7 @@ img {
     max-width: 45%;
   }
 }
-input[type="text"] {
+input[type=text] {
   display: grid;
   box-sizing: border-box;
   outline: none;
@@ -158,13 +123,13 @@ input[type="text"] {
   border: 1px solid #fc846c;
   -webkit-transition: 0.5s;
   transition: 0.5s;
-  &::placeholder {
-    color: #fcb7a6;
-  }
+&::placeholder {
+  color: #fcb7a6;
+}
   &:focus {
-    border-radius: 8px;
-    border: 1px solid #fc2e07;
-    background-color: #fcb7a6;
+  border-radius: 8px;
+  border: 1px solid #fc2e07;
+    background-color: #fcb7a6 ;
   }
 }
 
@@ -174,7 +139,7 @@ input[type="text"] {
     color: #fc2e07;
   }
 }
-.submit {
+.submit{
   margin: auto auto 10px auto;
   width: 65%;
   background-color: #fc2e07;
@@ -182,11 +147,12 @@ input[type="text"] {
   padding: 15px;
   font-size: 20px;
   text-transform: uppercase;
-  border: 0px;
-  font-weight: bold;
-  a {
-    text-decoration: none;
-    color: #fcf2f1;
+border: 0px;
+font-weight: bold;
+  a{
+  text-decoration: none;
+  color: #fcf2f1;
   }
 }
+
 </style>

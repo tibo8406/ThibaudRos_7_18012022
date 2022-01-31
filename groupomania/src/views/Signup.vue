@@ -3,22 +3,14 @@
     <div id="header">
       <img alt="Logo Groupomania" src="../assets/icon-above-font.png" />
       <p>Bienvenue sur le réseau social de la société Groupamania Home</p>
-      <li class="option">
-        <router-link to="/signup">S'inscrire</router-link>
-      </li>
-      <li class="option">
-        <router-link to="/login">Se connecter</router-link>
-      </li>
-      <li class="option">
-        <router-link to="/socialgroup">Réseau Social</router-link>
-      </li>
-
-      <router-view></router-view>
-
-      <!--<div class="form_">
+      <div class="form_">
         <div class="form_option">
-          <li class="option active"><router-link to="/signup">S'inscrire</router-link></li>
-          <li class="option"><router-link to="/login">Se connecter</router-link></li>
+          <li class="option active">
+            <router-link to="/signup">S'inscrire</router-link>
+          </li>
+          <li class="option">
+            <router-link to="/login">Se connecter</router-link>
+          </li>
         </div>
         <div class="form_title">
           <h1>Inscription</h1>
@@ -66,12 +58,12 @@
             <a href="/forgot">Mot de passe oublié ?</a>
           </div>
           <div class="button">
-            <button class="submit"><a href="#">S'inscrire</a></button>
+            <a href="#"><button class="submit">S'inscrire</button></a>
           </div>
         </form>
       </div>
 
-      <router-view></router-view>-->
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -81,7 +73,6 @@
 </script>
 
 <style lang="scss">
-
 #header {
   justify-items: center;
   padding: 0px 15px 0px 15px;
@@ -96,19 +87,22 @@ img {
   color: white;
 }
 .form_ {
+background-color: rgba(252,242,241,0.3);
   display: block;
   max-width: 500px;
   border-radius: 15px;
   margin: auto;
   margin-top: 40px;
   padding: 25px;
-  border: 2px solid #fcb7a6;
+  //border: 2px solid #fcb7a6;
+  box-shadow: #fcb7a6;
 }
 .form_option {
   display: grid;
   grid-template-columns: 1fr 1fr;
   list-style: none;
   li a {
+    border: 1px solid #fc2e07;
     font-weight: bold;
     display: grid;
     text-decoration: none;
@@ -124,15 +118,14 @@ img {
     }
   }
   .active a {
-    background: #fc2e07;
+    background: rgb(252,46,7);
     color: white;
   }
 }
 .option {
   active {
     font-size: 20px;
-    color: red;
-    background-color: chocolate;
+    color: rgb(252,46,7);
   }
 }
 .ligne1champs {
@@ -177,16 +170,18 @@ input[type="text"] {
 .submit {
   margin: auto auto 10px auto;
   width: 65%;
-  background-color: #fc2e07;
+  background-color: rgb(252,46,7,0.5);
   border-radius: 5px;
   padding: 15px;
   font-size: 20px;
   text-transform: uppercase;
   border: 0px;
   font-weight: bold;
-  a {
+  &:hover{
+      cursor: pointer;
+  background-color: rgb(252,46,7,1);
+  }
     text-decoration: none;
     color: #fcf2f1;
-  }
 }
 </style>

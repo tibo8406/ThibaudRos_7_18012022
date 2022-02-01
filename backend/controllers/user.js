@@ -3,24 +3,26 @@ const jwt = require('jsonwebtoken');
 const Employee = require('../models/User');
 
 exports.signup = (req, res, next) => {
-    const employeeEmail = Employee.findOne({ where: { email: req.body.email } })
-    if (employeeEmail != null) {
-        console.log("Utilisateur existant !");
-        return res.status(401).json({ message: 'Utilisateur existant !' }); //bon code erreur ?
-    }
-    bcrypt.hash(req.body.password, 10)
-        .then(hash => {
-            const employeeToCreate = Employee.build({
-                email: req.body.email,
-                password: hash,
-                nom: req.body.nom,
-                prenom: req.body.prenom,
-                poste: req.body.poste
-            });
-            employeeToCreate.save();
-            res.status(201).json({ message: 'Utilisateur créé !' });
+    Employee.findOne({ where: { email: req.body.email } })
+        .then(emailFound => {
+            if (emailFound) {
+                return res.status(401).json({ message: 'Utilisateur existant !' });
+            }
+
+            bcrypt.hash(req.body.password, 10)
+                .then(hash => {
+                    const employeeToCreate = Employee.build({
+                        email: req.body.email,
+                        password: hash,
+                        nom: req.body.nom,
+                        prenom: req.body.prenom,
+                        poste: req.body.poste
+                    });
+                    employeeToCreate.save();
+                    res.status(201).json({ message: 'Utilisateur créé !' });
+                })
+                .catch(error => res.status(500).json({ message: 'erreur' }));
         })
-        .catch(error => res.status(500).json({ message: 'erreur' }));
 };
 
 exports.login = (req, res, next) => {
@@ -29,8 +31,6 @@ exports.login = (req, res, next) => {
             if (!employeeFound) {
                 return res.status(401).json({ message: 'Utilisateur non trouvé !' });
             }
-            console.log(req.body.password);
-            console.log(employeeFound.password);
             bcrypt.compare(req.body.password, employeeFound.password)
                 .then(valid => {
                     if (!valid) {

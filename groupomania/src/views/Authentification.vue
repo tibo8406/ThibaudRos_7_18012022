@@ -1,32 +1,8 @@
 <template>
-  <div class="home">
-    <div id="header">
-      <img alt="Logo Groupomania" src="../assets/icon-above-font.png" />
-      <p>Bienvenue sur le réseau social de la société Groupamania Home</p>
-      <router-view></router-view>
-    </div>
-  </div>
+    <router-view></router-view>
 </template>
 
-<script>
-// @ is an alias to /src
-</script>
-
 <style lang="scss">
-
-#header {
-  justify-items: center;
-  padding: 0px 15px 0px 15px;
-}
-img {
-  width: 100%;
-  max-width: 400px;
-  justify-items: center;
-}
-#router-link {
-  background: #fc2e07;
-  color: white;
-}
 .form_ {
   display: block;
   max-width: 500px;

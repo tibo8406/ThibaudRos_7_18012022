@@ -94,7 +94,7 @@ export default {
           poste: this.poste,
         })
         .then(function (response) {
-          router.push("/SocialGroup");
+          router.push('SocialGroup');
           console.log(response);
         })
         .catch(function (error) {

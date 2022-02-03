@@ -1,11 +1,8 @@
 <template>
-  <div class="home">
     <div id="header">
       <img alt="Logo Groupomania" src="../assets/icon-above-font.png" />
-      <p>Bienvenue sur le réseau social de la société Groupamania Home</p>
-      <router-view></router-view>
+      <p>Bienvenue sur le réseau social de la société Groupamania</p>
     </div>
-  </div>
 </template>
 
 <script>

@@ -1,29 +1,23 @@
 <template>
-  <div class="social_groupomania">
-    <div id="entete">
-      <img alt="Logo Groupomania" src="../assets/icon-left-font.png" />
-      <a href="#"><i class="fas fa-user" alt="Icone compte utilisateur"></i></a>
-    </div>
+  <div class="Socialgroup">
+    Bienvenue {{ $store.state.userFirstName }} {{ $store.state.userLastName}}
+    <Post />
     <div class="wall">
-      <div class="post">
+      <div class="post" v-for="i in posts" :key="i.id">
         <div class="post_user">
           <div class="post_user_pic">
-            <img src="../assets/FP.jpg" />
+            <img src="userImg" />
           </div>
           <div class="post_user_info">
-            <div class="post_user_info_name">Thibaud Ros</div>
-            <div class="post_user_info_job">Developpeur Web</div>
+            <div class="post_user_info_name">
+              {{ i.nom_auteur }} {{ i.prenom_auteur }}
+            </div>
+            <div class="post_user_info_job">{{ i.poste_auteur }}</div>
           </div>
         </div>
         <div class="post_content">
           <div class="post_content_text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-            non ultrices ligula. Nullam augue magna, bibendum sed nisl eget,
-            suscipit blandit tortor. Cras ut dolor vitae felis auctor tristique.
-            Praesent. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Curabitur non ultrices ligula. Nullam augue magna, bibendum sed nisl
-            eget, suscipit blandit tortor. Cras ut dolor vitae felis auctor
-            tristique. Praesent.
+            {{ i.messages }}
           </div>
           <div class="post_content_media">
             <img src="../assets/1640957811017.jpg" />
@@ -46,7 +40,7 @@
         <div class="content_comments">
           <div class="post_user">
             <div class="post_user_pic">
-              <img src="../assets/FP.jpg" />
+              <img src="userImg" />
             </div>
             <div class="post_user_info">
               <div class="post_user_info_name">Thibaud Ros</div>
@@ -66,17 +60,56 @@
           </div>
         </div>
         <div class="comment">
-          <div class="comment_user_pic"><img src="../assets/FP.jpg" /></div>
+          <div class="comment_user_pic"><img src="userImg" /></div>
           <div class="comment_action"><input type="text" /></div>
         </div>
       </div>
+      <router-view></router-view>
     </div>
-    <router-view></router-view>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import Post from "../components/Post.vue";
+import axios from "axios";
+
+export default {
+  name: "SocialGroup",
+  components: {
+    Post,
+  },
+  beforeCreate() {
+    console.log(this.$store.state.userId);
+    axios
+      .get(
+        "http://localhost:3000/api/employees/" + this.$store.state.userId,
+        {}
+      )
+      .then((res) => {
+        console.log(res);
+        this.$store.state.userLastName = res.data.nom;
+        this.$store.state.userFirstName = res.data.prenom;
+      });
+  },
+  data() {
+    return {
+      posts: { type: Array },
+    };
+  },
+  created: function () {
+    axios
+      .get("http://localhost:3000/api/posts", {
+        /*headers: { Authorization: `Bearer ${data.token}` }*/
+      })
+      .then((res) => {
+        const rep = res.data;
+        this.posts = rep;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  },
+};
 </script>
 
 <style lang="scss">
@@ -256,14 +289,14 @@
     margin-right: 15px;
     max-width: 6%;
     img {
-      border-radius: 15px;
+      border-radius: 20px;
     }
   }
   &_action {
-    width:auto ;
+    width: auto;
     input {
       background: rgba($color: silver, $alpha: 0.25);
-min: width 100%;
+      min-width: 100%;
       border: none;
       height: 30px;
       color: grey;

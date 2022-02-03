@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const Employee = require('../models/User');
+const Employee = require('../models/userModel');
 
 exports.signup = (req, res, next) => {
     Employee.findOne({ where: { email: req.body.email } })
@@ -8,7 +8,6 @@ exports.signup = (req, res, next) => {
             if (emailFound) {
                 return res.status(401).json({ message: 'Utilisateur existant !' });
             }
-
             bcrypt.hash(req.body.password, 10)
                 .then(hash => {
                     const employeeToCreate = Employee.build({
@@ -47,3 +46,10 @@ exports.login = (req, res, next) => {
         })
         .catch(error => res.status(500).json({ error }));
 };
+
+/*exports.logout = (req, res) => {
+    res.status(200).json({
+        token: ('jwt', '', "1")
+    })
+    res.redirect('/');
+};*/

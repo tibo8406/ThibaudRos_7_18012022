@@ -51,7 +51,12 @@ import router from "../router/index";
 import axios from "axios";
 
 export default {
-
+  beforeCreate() {
+    console.log(sessionStorage);
+    if (sessionStorage.loggedIn) {
+      router.push("SocialGroup");
+    }
+  },
   data() {
     return {
       email: "",
@@ -70,6 +75,7 @@ export default {
   },
   methods: {
     login() {
+      event.preventDefault();
       axios
         .post("http://localhost:3000/api/auth/login", {
           email: this.email,
@@ -79,8 +85,8 @@ export default {
           this.$store.commit("createUserInfo", {
             id: res.data.id,
             token: res.data.token,
-            loggedIn: true,
           });
+          window.sessionStorage.setItem("loggedIn", true);
           router.push("SocialGroup");
         })
         .catch(function (error) {

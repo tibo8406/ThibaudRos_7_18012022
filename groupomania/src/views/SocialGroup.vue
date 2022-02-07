@@ -1,6 +1,6 @@
 <template>
   <div class="Socialgroup">
-    Bienvenue {{ $store.state.userFirstName }} {{ $store.state.userLastName}}
+    Bienvenue {{$store.getters.completeUserName}}
     <Post />
     <div class="wall">
       <div class="post" v-for="i in posts" :key="i.id">
@@ -71,6 +71,7 @@
 
 <script>
 import Post from "../components/Post.vue";
+import router from "../router/index";
 import axios from "axios";
 
 export default {
@@ -79,7 +80,10 @@ export default {
     Post,
   },
   beforeCreate() {
-    console.log(this.$store.state.userId);
+    if (!sessionStorage.loggedIn) {
+      router.push("Login");
+    } else{
+
     axios
       .get(
         "http://localhost:3000/api/employees/" + this.$store.state.userId,
@@ -89,8 +93,9 @@ export default {
         console.log(res);
         this.$store.state.userLastName = res.data.nom;
         this.$store.state.userFirstName = res.data.prenom;
+        this.$store.state.userJob = res.data.poste;
       });
-  },
+      }},
   data() {
     return {
       posts: { type: Array },
@@ -192,7 +197,7 @@ export default {
       &_job {
         height: 25px;
         line-height: 25px;
-        text-align: center;
+        text-align: left;
         font-size: 15px;
       }
     }

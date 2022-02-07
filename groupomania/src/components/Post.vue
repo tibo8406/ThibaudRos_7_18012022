@@ -34,8 +34,8 @@
 </template>
 
 <script>
-/*import router from "../router/index";
-import axios from "axios";*/
+import router from "../router/index";
+import axios from "axios";
 export default {
   data() {
     return { fileImg: {}, messages: "", image: "" };
@@ -61,12 +61,20 @@ export default {
       this.image = "";
       this.fileImg = null;
     },
-    /*postSomething() {
+    postSomething() {
+      event.preventDefault;
+      console.log(this.messages);
       axios
-        .post("http://localhost:3000/api/posts", this.fileImg, {
-          headers: {
+        .post("http://localhost:3000/api/posts", /*this.fileImg,*/ {
+          /*headers: {
             "Content-Type": "multipart/form-data",
-          },
+          },*/
+          nom_auteur: this.$store.state.userLastName,
+    prenom_auteur: this.$store.state.userFirstName,
+    poste_auteur: this.$store.state.userJob,
+    user_id: this.$store.state.userId,
+    messages: this.messages,
+
         })
         .then(function (response) {
           router.push("SocialGroup");
@@ -75,7 +83,7 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
-    },*/
+    },
   },
 };
 </script>

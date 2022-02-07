@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from '../App.vue'
-//import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
 import SocialGroup from '../views/SocialGroup.vue'
 import Authentification from '../views/Authentification.vue'
 import Post from '../components/Post.vue'
+import UserAccount from '../views/UserAccount.vue'
+
 
 
 
@@ -20,7 +21,8 @@ const routes = [
     { path: '/Login', component: Login },
     { path: '/SocialGroup', component: SocialGroup },
     { path: '/Signup', component: Signup },
-    { path: '/Post', component: Post }
+    { path: '/Post', component: Post },
+    { path: '/useraccount', component: UserAccount }
     /*{path: '/',
     name: 'App',
     component: App,

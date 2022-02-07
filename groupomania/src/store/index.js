@@ -10,17 +10,24 @@ export default new Vuex.Store({
         userFirstName: String,
         userLastName: String,
         userId: Number,
-        loggedIn: false
+        userJob: String,
+        userMail: String,
+        loggedIn: false,
     },
     mutations: {
         createUserInfo: (state, userInfos) => {
             state.userId = userInfos.id;
             state.userToken = userInfos.token;
-            state.loggedIn = userInfos.loggedIn;
+            //state.loggedIn = userInfos.loggedIn;
         }
     },
     actions: {
 
+    },
+    getters: {
+        completeUserName(state) {
+            return `${state.userFirstName} ${state.userLastName}`
+        }
     },
     modules: {},
     plugins: [createPersistedState()]

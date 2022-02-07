@@ -7,8 +7,12 @@ exports.showAllPosts = (req, res, next) => {
 };
 exports.createOnePost = (req, res, next) => {
     const postToCreate = Post.build({
+        nom_auteur: req.body.nom_auteur,
+        prenom_auteur: req.body.prenom_auteur,
+        poste_auteur: req.body.poste_auteur,
+        user_id: req.body.user_id,
         messages: req.body.messages,
-        urlMedia: `${req.protocol}://${req.get('host')}/images/${req.body.file.filename}`
+        //urlMedia: `${req.protocol}://${req.get('host')}/images/${req.body.file.filename}`
     });
     console.log(postToCreate);
     postToCreate.save()

@@ -1,6 +1,7 @@
 <template>
   <div class="Socialgroup">
-    Bienvenue {{$store.getters.completeUserName}}
+    Bienvenue {{$store.getters.completeUserName}}<br>
+    <button v-on:click="showUserAccount()" class="submit">Mon compte utilsiateur</button>
     <Post />
     <div class="wall">
       <div class="post" v-for="i in posts" :key="i.id">
@@ -20,7 +21,7 @@
             {{ i.messages }}
           </div>
           <div class="post_content_media">
-            <img src="../assets/1640957811017.jpg" />
+            <img :src=i.urlMedia />
           </div>
         </div>
         <div class="reactions">
@@ -90,16 +91,20 @@ export default {
         {}
       )
       .then((res) => {
-        console.log(res);
-        this.$store.state.userLastName = res.data.nom;
-        this.$store.state.userFirstName = res.data.prenom;
-        this.$store.state.userJob = res.data.poste;
-      });
+
+          this.$store.commit('updateUserInfo',res.data);
+        });
       }},
   data() {
     return {
       posts: { type: Array },
     };
+  },
+  methods:{
+    showUserAccount(){
+            router.push("useraccount");
+
+    }
   },
   created: function () {
     axios
@@ -109,6 +114,7 @@ export default {
       .then((res) => {
         const rep = res.data;
         this.posts = rep;
+        console.log(rep);
       })
       .catch(function (error) {
         console.log(error);

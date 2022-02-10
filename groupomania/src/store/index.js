@@ -6,19 +6,27 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        userToken: String,
-        userFirstName: String,
-        userLastName: String,
-        userId: Number,
-        userJob: String,
-        userMail: String,
-        loggedIn: false,
+        userToken: "",
+        userFirstName: "",
+        userLastName: "",
+        userId: "",
+        userJob: "",
+        userMail: "",
+        userPassword: "",
+        userImg: ""
     },
     mutations: {
         createUserInfo: (state, userInfos) => {
             state.userId = userInfos.id;
             state.userToken = userInfos.token;
-            //state.loggedIn = userInfos.loggedIn;
+        },
+        updateUserInfo: (state, userInfos) => {
+            state.userJob = userInfos.poste;
+            state.userLastName = userInfos.nom;
+            state.userFirstName = userInfos.prenom;
+            state.userMail = userInfos.email;
+            state.userPassword = userInfos.password;
+            state.userImg = userInfos.urlImg;
         }
     },
     actions: {

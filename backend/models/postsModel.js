@@ -6,7 +6,7 @@ const postSchema = Db.define("posts", {
     poste_auteur: { type: String, required: true },
     user_id: { type: Number, required: true },
     messages: { type: String, required: true },
-    /*urlMedia: { type: String, required: true },*/
+    urlMedia: { type: String, required: true },
 
 });
 

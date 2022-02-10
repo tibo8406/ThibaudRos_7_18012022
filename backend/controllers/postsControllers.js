@@ -6,13 +6,14 @@ exports.showAllPosts = (req, res, next) => {
         .catch(error => res.status(400).json({ error }));
 };
 exports.createOnePost = (req, res, next) => {
+    const post = JSON.parse(req.body.post);
     const postToCreate = Post.build({
-        nom_auteur: req.body.nom_auteur,
-        prenom_auteur: req.body.prenom_auteur,
-        poste_auteur: req.body.poste_auteur,
-        user_id: req.body.user_id,
-        messages: req.body.messages,
-        //urlMedia: `${req.protocol}://${req.get('host')}/images/${req.body.file.filename}`
+        nom_auteur: post.nom_auteur,
+        prenom_auteur: post.prenom_auteur,
+        poste_auteur: post.poste_auteur,
+        user_id: post.user_id,
+        messages: post.messages,
+        urlMedia: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
     console.log(postToCreate);
     postToCreate.save()

@@ -37,7 +37,7 @@
         <button
           class="submit"
           :class="{ 'submit--disabled': !validatedFields }"
-          v-on:click="login()"
+          @click.prevent="login()"
         >
           Se connecter
         </button>
@@ -75,7 +75,6 @@ export default {
   },
   methods: {
     login() {
-      event.preventDefault();
       axios
         .post("http://localhost:3000/api/auth/login", {
           email: this.email,
@@ -165,7 +164,7 @@ img {
     max-width: 45%;
   }
 }
-input[type="text"] {
+input {
   display: grid;
   box-sizing: border-box;
   outline: none;

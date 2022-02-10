@@ -24,7 +24,7 @@
       </div>
       <div class="button">
         <a href="#"
-          ><button v-on:click="postSomething()" class="submit">
+          ><button @click.prevent="postSomething()" class="submit">
             Poster
           </button></a
         >
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import router from "../router/index";
+//import router from "../router/index";
 import axios from "axios";
 export default {
   data() {
@@ -62,22 +62,21 @@ export default {
       this.fileImg = null;
     },
     postSomething() {
-      event.preventDefault;
-      console.log(this.messages);
-      axios
-        .post("http://localhost:3000/api/posts", /*this.fileImg,*/ {
-          /*headers: {
-            "Content-Type": "multipart/form-data",
-          },*/
-          nom_auteur: this.$store.state.userLastName,
-    prenom_auteur: this.$store.state.userFirstName,
-    poste_auteur: this.$store.state.userJob,
-    user_id: this.$store.state.userId,
-    messages: this.messages,
+      const formData = new FormData();
+      formData.append("post", JSON.stringify( {
+        nom_auteur: this.$store.state.userLastName,
+        prenom_auteur: this.$store.state.userFirstName,
+        poste_auteur: this.$store.state.userJob,
+        user_id: this.$store.state.userId,
+        messages: this.messages,
+      }));
+      formData.append("image", this.fileImg);
 
-        })
+      axios
+        .post("http://localhost:3000/api/posts", formData)
         .then(function (response) {
-          router.push("SocialGroup");
+          location.reload();
+          //router.push("SocialGroup").catch(()=>{});
           console.log(response);
         })
         .catch(function (error) {

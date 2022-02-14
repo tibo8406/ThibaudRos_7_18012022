@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 });
 app.use('/api/auth', userRoutes);
 app.use('/api/employees', employeeRoutes);
-app.use('/api/posts' /*, isLoggedIn*/ , postsRoutes);
+app.use('/api/posts', isLoggedIn, postsRoutes);
 
 
 

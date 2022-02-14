@@ -27,6 +27,16 @@ export default new Vuex.Store({
             state.userMail = userInfos.email;
             state.userPassword = userInfos.password;
             state.userImg = userInfos.urlImg;
+        },
+        logOutUser: (state, userInfos) => {
+            state.userId = userInfos.id;
+            state.userToken = userInfos.token;
+            state.userJob = userInfos.poste;
+            state.userLastName = userInfos.nom;
+            state.userFirstName = userInfos.prenom;
+            state.userMail = userInfos.email;
+            state.userPassword = userInfos.password;
+            state.userImg = userInfos.urlImg;
         }
     },
     actions: {

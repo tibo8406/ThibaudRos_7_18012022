@@ -13,7 +13,7 @@
           v-model="messages"
           required
         />
-        <div v-if="!image">
+        <div class="addImg" v-if="!image">
           <h2>Ajouter une image</h2>
           <input type="file" id="file" @change="onFileChange" />
         </div>
@@ -34,7 +34,6 @@
 </template>
 
 <script>
-//import router from "../router/index";
 import axios from "axios";
 export default {
   data() {
@@ -73,11 +72,13 @@ export default {
       formData.append("image", this.fileImg);
 
       axios
-        .post("http://localhost:3000/api/posts", formData)
-        .then(function (response) {
+        .post("http://localhost:3000/api/posts",formData, { 
+          headers: { 
+            'Authorization': 'Bearer '+this.$store.state.userToken
+            },
+          })
+        .then(function () {
           location.reload();
-          //router.push("SocialGroup").catch(()=>{});
-          console.log(response);
         })
         .catch(function (error) {
           console.log(error);
@@ -98,8 +99,11 @@ export default {
   display: grid;
   grid-template-columns: 1fr;
 }
-
+.addImg{
+display: grid;
+}
 input[type="text"] {
+  margin: auto;
   display: grid;
   box-sizing: border-box;
   outline: none;
@@ -109,6 +113,7 @@ input[type="text"] {
   border: 1px solid #fc846c;
   -webkit-transition: 0.5s;
   transition: 0.5s;
+  max-width: max-content;
   &::placeholder {
     color: #fcb7a6;
   }

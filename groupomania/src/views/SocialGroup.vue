@@ -1,13 +1,13 @@
 <template>
   <div class="Socialgroup">
     Bienvenue {{$store.getters.completeUserName}}<br>
-    <button v-on:click="showUserAccount()" class="submit">Mon compte utilsiateur</button>
+    <button v-on:click="showUserAccount()" class="submit">Mon compte utilisateur</button>
     <Post />
     <div class="wall">
       <div class="post" v-for="i in posts" :key="i.id">
         <div class="post_user">
           <div class="post_user_pic">
-            <img src="userImg" />
+            <img :src=i.userImg />
           </div>
           <div class="post_user_info">
             <div class="post_user_info_name">
@@ -102,19 +102,22 @@ export default {
   },
   methods:{
     showUserAccount(){
-            router.push("useraccount");
+      router.push("useraccount");
 
     }
   },
   created: function () {
+        console.log(this.$store.state.userToken);
+
     axios
-      .get("http://localhost:3000/api/posts", {
-        /*headers: { Authorization: `Bearer ${data.token}` }*/
-      })
+      .get("http://localhost:3000/api/posts", { 
+          headers: { 
+            'Authorization': 'Bearer '+this.$store.state.userToken
+            },
+          })
       .then((res) => {
         const rep = res.data;
         this.posts = rep;
-        console.log(rep);
       })
       .catch(function (error) {
         console.log(error);

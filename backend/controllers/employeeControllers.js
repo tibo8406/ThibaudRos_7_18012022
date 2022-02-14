@@ -21,43 +21,35 @@ exports.findOneEmployee = (req, res, next) => {
 }
 
 exports.updateEmployeeAccount = (req, res, next) => {
-    //const employeeObject = req.file ? JSON.parse(req.body.employee) : req.body.employee;
-    //const employeeObject = req.body.employee;
-    const employeeObject = JSON.parse(req.body.employee); // expression ternaire // on est soius forme data, il faut parser en json
+    const employeeObject = JSON.parse(req.body.employee);
     console.log(employeeObject);
-    if (req.file && employeeObject.urlImg) {
-        console.log(employeeObject);
-        const filename = employeeObject.urlImg.split('/images/')[1];
-        console.log(filename);
+    if (req.file && employeeObject.urlImgOld) {
+        const filename = employeeObject.urlImgOld.split('/images/')[1];
         fs.unlink(`images/${filename}`, () => {});
-        employeeObject.urlImg = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`; // resout l'url urlImg, protocol = http on ajoute :// etc ...
-    } else if (req.file && !employeeObject.urlImg) {
-        console.log(employeeObject);
-        employeeObject.urlImg = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`; // resout l'url urlImg, protocol = http on ajoute :// etc ...
+        employeeObject.urlImgNew = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`; // resout l'url urlImg, protocol = http on ajoute :// etc ...
+    } else if (req.file && !employeeObject.urlImgOld) {
+        employeeObject.urlImgNew = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`; // resout l'url urlImg, protocol = http on ajoute :// etc ...
     } else {
-        if (!req.file && employeeObject.urlImg) {
-            console.log(employeeObject);
-            console.log(employeeObject);
-            const filename = employeeObject.urlImg.split('/images/')[1];
-            console.log(filename);
+        if (!req.file && employeeObject.urlImgOld && !employeeObject.urlImgNew) {
+            const filename = employeeObject.urlImgOld.split('/images/')[1];
             fs.unlink(`images/${filename}`, () => {});
-            employeeObject.urlImg = null;
-        } else {
-
+            employeeObject.urlImgNew = null;
+        } else if (!req.file && employeeObject.urlImgNew) {
+            employeeObject.urlImgNew = employeeObject.urlImgOld;
         }
     }
 
-    Employee.update({
-        nom: employeeObject.nom,
-        prenom: employeeObject.prenom,
-        poste: employeeObject.poste,
-        email: employeeObject.email,
-        urlImg: employeeObject.urlImg
-    }, {
-        where: { id: employeeObject.id }
-    })
 
-    .then(employee => {
+    Employee.update({
+            nom: employeeObject.nom,
+            prenom: employeeObject.prenom,
+            poste: employeeObject.poste,
+            email: employeeObject.email,
+            urlImg: employeeObject.urlImgNew
+        }, {
+            where: { id: employeeObject.id }
+        })
+        .then(() => {
             Employee.findOne({ where: { id: employeeObject.id } })
                 .then((thisEmployee) => {
                     if (thisEmployee !== null) {
@@ -69,4 +61,10 @@ exports.updateEmployeeAccount = (req, res, next) => {
                 });
         })
         .catch(error => res.status(400).json({ error }));
-}
+};
+
+exports.deleteAccount = (req, res, next) => {
+    Employee.destroy({ where: { id: req.params.id } })
+        .then(res => res.status(200).json({ message: 'Utilisateur supprimé !' }))
+        .catch(error => res.status(400).json({ error }));
+};

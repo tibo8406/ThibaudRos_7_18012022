@@ -58,13 +58,9 @@
           required
         />
       </div>
-      <div class="forgot">
-        <a href="/forgot">Mot de passe oublié ?</a>
-      </div>
+
       <div class="button">
-        <a href="#"
-          ><button v-on:click="signup()" class="submit">S'inscrire</button></a
-        >
+<button @click.prevent="signup()" class="submit" :class="{ 'submit--disabled': !validatedFields }">S'inscrire</button>
       </div>
     </form>
   </div>
@@ -83,6 +79,15 @@ export default {
       poste: "",
     };
   },
+    computed: {
+    validatedFields: function () {
+      if (this.email != "" && this.password != "" && this.nom != "" && this.prenom != "" && this.poste != ""  ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
   methods: {
     signup() {
       axios
@@ -94,8 +99,8 @@ export default {
           poste: this.poste,
         })
         .then(function (response) {
-          router.push('SocialGroup');
           console.log(response);
+          router.push('SocialGroup');
         })
         .catch(function (error) {
           console.log(error);
@@ -127,7 +132,6 @@ img {
   margin: auto;
   margin-top: 40px;
   padding: 25px;
-  //border: 2px solid #fcb7a6;
   box-shadow: #fcb7a6;
 }
 .form_option {

@@ -2,11 +2,12 @@
   <div class="UserAccount">
     <h1 v-if="mode == 'saved'">Mon compte utilisateur</h1>
     <h1 v-else>Je modifie mon compte utilisateur</h1>
-    <img
-      v-if="!image && mode == 'saved'"
-      src="http://localhost:3000/images/user_default.jpg"
-    />
-
+    <div class="userImg--default">
+      <img
+        v-if="!image && mode == 'saved'"
+        src="http://localhost:3000/images/user_default.jpg"
+      />
+    </div>
     <div class="userImg" v-if="!image && mode == 'modify'">
       <h2>Photo de profil</h2>
       <img v-if="mode == 'saved' && image" :src="image" />
@@ -17,8 +18,9 @@
         @change="onFileChange"
       />
     </div>
-    <div v-else>
+    <div class="userImg--default" v-else>
       <img :src="image" />
+      <br>
       <button v-if="mode == 'modify'" @click="removeurlMedia">
         Supprimer la photo de profil
       </button>
@@ -103,6 +105,7 @@
           v-model="email"
           required
         />
+        <br />
         <!--<label>Mot de passe :</label>
         <input
           v-if="mode == 'saved'"
@@ -129,6 +132,13 @@
         </button>
         <button v-else class="submit" @click.prevent="saveAccount()">
           Enregistrer
+        </button>
+        <button
+          v-if="mode == 'saved'"
+          class="submit"
+          @click.prevent="deleteAccount()"
+        >
+          Supprimer mon compte
         </button>
       </form>
     </div>
@@ -205,7 +215,8 @@ export default {
           poste: this.poste,
           email: this.email,
           id: this.$store.state.userId,
-          urlImg: this.$store.state.userImg,
+          urlImgOld: this.$store.state.userImg,
+          urlImgNew: this.fileImg
         })
       );
       formData.append("image", this.fileImg);
@@ -215,7 +226,7 @@ export default {
           "http://localhost:3000/api/employees/" + this.$store.state.userId,
           formData
         )
-        .then(res => {
+        .then((res) => {
           console.log(res.data);
           this.$store.commit("updateUserInfo", res.data);
           location.reload();
@@ -223,6 +234,36 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
+    deleteAccount() {
+      const deleteConfirmation = confirm(
+        "Voulez vous supprimer votre compte ? (Toutes les données seront perdues !"
+      );
+      if (deleteConfirmation) {
+        axios
+          .delete(
+            "http://localhost:3000/api/employees/" + this.$store.state.userId,
+            {}
+          )
+          .then(() => {
+            this.$store.commit("logOutUser", {
+              id: null,
+              token: null,
+              poste: null,
+              nom: null,
+              prenom: null,
+              email: null,
+              password: null,
+              urlImg: null,
+            });
+            sessionStorage.loggedIn = false;
+            alert("Compte utilisateur supprimé");
+            location.reload;
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     },
   },
 };
@@ -232,6 +273,12 @@ export default {
 .userImg {
   display: grid;
   justify-content: center;
+  &--default {
+    img {
+      max-height: 20%;
+      max-width: 20%;
+    }
+  }
 }
 .userinfo {
   padding-top: 40px;

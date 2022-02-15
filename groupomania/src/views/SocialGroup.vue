@@ -1,13 +1,12 @@
 <template>
   <div class="Socialgroup">
     <div class="headerSocial">
-      <span><i  v-on:click="showUserAccount()" class="fa fa-solid fa-user"></i></span>
-      <span><i class="fa fa-solid fa-door-open"></i></span>
-      <!--<button v-on:click="showUserAccount()" class="submit">
-        Mon compte utilisateur
-      </button>-->
+      <span
+        ><i @click="showUserAccount()" class="fa fa-solid fa-user"></i
+      ></span>
+      <span><i @click="logOut()" class="fa fa-solid fa-door-open"></i></span>
     </div>
-     Bienvenue <b>{{ $store.getters.completeUserName }}</b>
+    Bienvenue <b>{{ $store.getters.completeUserName }}</b>
     <Post />
     <div class="wall">
       <div class="post" v-for="i in posts" :key="i.id">
@@ -87,7 +86,7 @@ export default {
     Post,
   },
   beforeCreate() {
-    if (!sessionStorage.loggedIn) {
+    if (sessionStorage.loggedIn!="OnLine") {
       router.push("Login");
     } else {
       axios
@@ -109,10 +108,23 @@ export default {
     showUserAccount() {
       router.push("useraccount");
     },
+    logOut() {
+      this.$store.commit("logOutUser", {
+        id: null,
+        token: null,
+        poste: null,
+        nom: null,
+        prenom: null,
+        email: null,
+        password: null,
+        urlImg: null,
+      });
+      sessionStorage.loggedIn="OffLine";
+      console.log(sessionStorage.loggedIn);
+      router.push("Login");
+    },
   },
   created: function () {
-    console.log(this.$store.state.userToken);
-
     axios
       .get("http://localhost:3000/api/posts", {
         headers: {
@@ -131,22 +143,20 @@ export default {
 </script>
 
 <style lang="scss">
-
 .fa {
   font-size: 50px;
   color: rgb(252, 46, 7, 0.5);
-  &:hover{
+  &:hover {
     cursor: pointer;
-    color:rgb(252, 46, 7, 1) ;
+    color: rgb(252, 46, 7, 1);
   }
 }
-.headerSocial{
+.headerSocial {
   padding-bottom: 20px;
   max-width: 500px;
-    display: flex;
-    justify-content: space-evenly;
-    margin: auto;
-
+  display: flex;
+  justify-content: space-evenly;
+  margin: auto;
 }
 .wall {
   padding-top: 60px;
@@ -189,7 +199,7 @@ export default {
     }
   }
   &_user {
-    display: inline-flex;
+    display: flex;
     min-width: fit-content;
     padding-top: 15px;
     padding-right: 15px;

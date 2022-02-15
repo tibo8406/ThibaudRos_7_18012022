@@ -1,146 +1,155 @@
 <template>
-  <div class="userAccount">
-    <h1 v-if="mode == 'saved'">Mon compte utilisateur</h1>
-    <h1 v-else>Je modifie mon compte utilisateur</h1>
-    <div class="userImg--default">
-      <img
-        v-if="!image && mode == 'saved'"
-        src="http://localhost:3000/images/user_default.jpg"
-      />
-    </div>
-    <div class="userImg" v-if="!image && mode == 'modify'">
-      <h2>Photo de profil</h2>
-      <img v-if="mode == 'saved' && image" :src="image" />
-      <input
+  <div>
+    <div>
+      <i
         v-if="mode == 'modify'"
-        type="file"
-        id="file"
-        @change="onFileChange"
-      />
+        @click.prevent="switchToSavedAccount()"
+        class="fa fa-solid fa-angle-left"
+        alt="Revenir en arrière"
+                title="Revenir en arrière"
+
+      ></i>
+      <i
+        v-if="mode == 'saved'"
+        @click="backToFeed()"
+        class="fa fa-solid fa-angle-left"
+                alt="Revenir au feed"
+                title="Revenir au feed"
+      ></i>
     </div>
-    <div class="userImg--default" v-else>
-      <img :src="image" />
-      <br>
-      <button v-if="mode == 'modify'" @click="removeurlMedia">
-        Supprimer la photo de profil
-      </button>
-    </div>
-    <br />
-    <h2>Informations générales</h2>
-    <div class="userinfo">
-      <form class="form_userinfo">
-        <label>Nom :</label>
-        <input
-          v-if="mode == 'saved'"
-          class="input--disabled"
-          type="text"
-          id="nom"
-          name="Nom"
-          v-model="nom"
-          disabled
+    <div class="userAccount">
+      <h1 v-if="mode == 'saved'">Mon compte utilisateur</h1>
+      <h1 v-else>Je modifie mon compte utilisateur</h1>
+      <div class="userImg--default">
+        <img
+          v-if="!image && mode == 'saved'"
+          src="http://localhost:3000/images/user_default.jpg"
         />
+      </div>
+      <div class="userImg" v-if="!image && mode == 'modify'">
+        <h2>Photo de profil</h2>
+        <img v-if="mode == 'saved' && image" :src="image" />
         <input
-          v-else
-          class="input--enabled"
-          type="text"
-          id="nom"
-          name="Nom"
-          v-model="nom"
-          required
+          v-if="mode == 'modify'"
+          type="file"
+          id="file"
+          @change="onFileChange"
         />
-        <label>Prénom :</label>
-        <input
-          v-if="mode == 'saved'"
-          class="input--disabled"
-          type="text"
-          id="prenom"
-          name="Prenom"
-          v-model="prenom"
-          disabled
-        />
-        <input
-          v-else
-          class="input--enabled"
-          type="text"
-          id="prenom"
-          name="Prenom"
-          v-model="prenom"
-          required
-        />
-        <label>Poste occupé :</label>
-        <input
-          v-if="mode == 'saved'"
-          class="input--disabled"
-          type="text"
-          id="poste"
-          name="Poste"
-          v-model="poste"
-          disabled
-        />
-        <input
-          v-else
-          class="input--enabled"
-          type="text"
-          id="poste"
-          name="Poste"
-          v-model="poste"
-          required
-        />
-        <label>Email :</label>
-        <input
-          v-if="mode == 'saved'"
-          class="input--disabled"
-          type="text"
-          id="email"
-          name="Email"
-          v-model="email"
-          disabled
-        />
-        <input
-          v-else
-          class="input--enabled"
-          type="text"
-          id="email"
-          name="Email"
-          v-model="email"
-          required
-        />
+      </div>
+      <div class="userImg--default" v-else>
+        <img :src="image" />
         <br />
-        <!--<label>Mot de passe :</label>
-        <input
-          v-if="mode == 'saved'"
-          class="input--disabled"
-          type="passsword"
-          id="password"
-          name="password"
-          disabled
-        />
-        <input
-          v-else
-          class="input--enabled"
-          type="passsword"
-          id="password"
-          name="password"
-          required
-        />-->
-        <button
-          v-if="mode == 'saved'"
-          class="submit"
-          @click.prevent="switchToModifyAccount()"
-        >
-          Modifier mon compte
+        <button v-if="mode == 'modify'" @click="removeurlMedia">
+          Supprimer la photo de profil
         </button>
-        <button v-else class="submit" @click.prevent="saveAccount()">
-          Enregistrer
-        </button>
-        <button
-          v-if="mode == 'saved'"
-          class="submit"
-          @click.prevent="deleteAccount()"
-        >
-          Supprimer mon compte
-        </button>
-      </form>
+      </div>
+      <br />
+      <h2>Informations générales</h2>
+      <div class="userinfo">
+        <form class="form_userinfo">
+          <label>Nom :</label>
+          <input
+            v-if="mode == 'saved'"
+            class="input--disabled"
+            type="text"
+            id="nom"
+            name="Nom"
+            v-model="nom"
+            disabled
+          />
+          <input
+            v-else
+            class="input--enabled"
+            type="text"
+            id="nom"
+            name="Nom"
+            v-model="nom"
+            required
+          />
+          <label>Prénom :</label>
+          <input
+            v-if="mode == 'saved'"
+            class="input--disabled"
+            type="text"
+            id="prenom"
+            name="Prenom"
+            v-model="prenom"
+            disabled
+          />
+          <input
+            v-else
+            class="input--enabled"
+            type="text"
+            id="prenom"
+            name="Prenom"
+            v-model="prenom"
+            required
+          />
+          <label>Poste occupé :</label>
+          <input
+            v-if="mode == 'saved'"
+            class="input--disabled"
+            type="text"
+            id="poste"
+            name="Poste"
+            v-model="poste"
+            disabled
+          />
+          <input
+            v-else
+            class="input--enabled"
+            type="text"
+            id="poste"
+            name="Poste"
+            v-model="poste"
+            required
+          />
+          <label>Email :</label>
+          <input
+            v-if="mode == 'saved'"
+            class="input--disabled"
+            type="text"
+            id="email"
+            name="Email"
+            v-model="email"
+            disabled
+          />
+          <input
+            v-else
+            class="input--enabled"
+            type="text"
+            id="email"
+            name="Email"
+            v-model="email"
+            required
+          />
+          <br />
+          <button
+            v-if="mode == 'saved'"
+            class="submit"
+            @click.prevent="switchToModifyAccount()"
+          >
+            Modifier mon compte
+          </button>
+          <button v-else class="submit" @click.prevent="saveAccount()">
+            Enregistrer
+          </button>
+          <button
+            v-if="mode == 'modify'"
+            class="submit--cancel"
+            @click.prevent="switchToSavedAccount()"
+          >
+            Annuler
+          </button>
+          <button
+            v-if="mode == 'saved'"
+            class="submit"
+            @click.prevent="deleteAccount()"
+          >
+            Supprimer mon compte
+          </button>
+        </form>
+      </div>
     </div>
     <router-view></router-view>
   </div>
@@ -152,7 +161,7 @@ import axios from "axios";
 
 export default {
   beforeCreate() {
-    if (!sessionStorage.loggedIn) {
+    if (sessionStorage.loggedIn != "OnLine") {
       router.push("Login");
     } else {
       axios
@@ -205,6 +214,12 @@ export default {
     switchToModifyAccount() {
       this.mode = "modify";
     },
+    switchToSavedAccount() {
+      location.reload();
+    },
+    backToFeed() {
+      router.push("SocialGroup");
+    },
     saveAccount() {
       const formData = new FormData();
       formData.append(
@@ -216,7 +231,7 @@ export default {
           email: this.email,
           id: this.$store.state.userId,
           urlImgOld: this.$store.state.userImg,
-          urlImgNew: this.fileImg
+          urlImgNew: this.fileImg,
         })
       );
       formData.append("image", this.fileImg);
@@ -237,7 +252,7 @@ export default {
     },
     deleteAccount() {
       const deleteConfirmation = confirm(
-        "Voulez vous supprimer votre compte ? (Toutes les données seront perdues !"
+        "Voulez vous supprimer votre compte ? (Toutes les données seront perdues !)"
       );
       if (deleteConfirmation) {
         axios
@@ -256,9 +271,9 @@ export default {
               password: null,
               urlImg: null,
             });
-            sessionStorage.loggedIn = false;
+            sessionStorage.loggedIn = "OffLine";
             alert("Compte utilisateur supprimé");
-            location.reload;
+            router.push("Login");
           })
           .catch(function (error) {
             console.log(error);
@@ -270,11 +285,11 @@ export default {
 </script>
 
 <style lang="scss">
-.userAccount{
+.userAccount {
   border-radius: 8px;
-      border: 1px solid #fc846c;
-      max-width: 500px;
-      margin: auto;
+  border: 1px solid #fc846c;
+  max-width: 500px;
+  margin: auto;
 }
 .userImg {
   display: grid;

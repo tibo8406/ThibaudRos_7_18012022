@@ -70,7 +70,6 @@ export default {
 
       reader.onload = (e) => {
         vm.image = e.target.result;
-        console.log(this.fileImg);
       };
       reader.readAsDataURL(file);
     },

@@ -65,6 +65,16 @@ exports.updateEmployeeAccount = (req, res, next) => {
 
 exports.deleteAccount = (req, res, next) => {
     Employee.destroy({ where: { id: req.params.id } })
-        .then(res => res.status(200).json({ message: 'Utilisateur supprimé !' }))
-        .catch(error => res.status(400).json({ error }));
+        /*.then(res => res.status(200).json({ message: 'Utilisateur supprimé !' }))
+        .catch(error => res.status(400).json({ message: 'Erreur destroy' }));*/
+        .then(function(deletedRecord) {
+            if (deletedRecord === 1) {
+                res.status(200).json({ message: "Compte supprimé" });
+            } else {
+                res.status(404).json({ message: "Compte non trouvé" })
+            }
+        })
+        .catch(function(error) {
+            res.status(500).json(error);
+        });
 };

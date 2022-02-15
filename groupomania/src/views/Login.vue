@@ -52,9 +52,12 @@ import axios from "axios";
 
 export default {
   beforeCreate() {
-    console.log(sessionStorage);
-    if (sessionStorage.loggedIn) {
+    console.log(sessionStorage.loggedIn);
+    if (sessionStorage.loggedIn === "OnLine") {
+      console.log(sessionStorage.loggedIn);
       router.push("SocialGroup");
+    } else {
+      console.log("else");
     }
   },
   data() {
@@ -85,7 +88,7 @@ export default {
             id: res.data.id,
             token: res.data.token,
           });
-          window.sessionStorage.setItem("loggedIn", true);
+          sessionStorage.setItem("loggedIn", "OnLine");
           router.push("SocialGroup");
         })
         .catch(function (error) {
@@ -200,20 +203,34 @@ input {
   }
   text-decoration: none;
   color: #fcf2f1;
-}
-.submit--disabled {
+  &--disabled {
+    margin: auto auto 10px auto;
+    width: 65%;
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 20px;
+    text-transform: uppercase;
+    border: 0px;
+    font-weight: bold;
+    cursor: not-allowed;
+    pointer-events: none;
+    text-decoration: none;
+    color: #c0c0c0;
+  }
+  &--cancel{
   margin: auto auto 10px auto;
   width: 65%;
-  background-color: #ffffff;
-  border-radius: 5px;
   padding: 15px;
-  font-size: 20px;
+  font-size: 15px;
   text-transform: uppercase;
-  border: 0px;
-  font-weight: bold;
-  cursor: not-allowed;
-  pointer-events: none;
-  text-decoration: none;
-  color: #c0c0c0;
+  border: none;
+  &:hover {
+      -webkit-transition: 0.5s;
+  transition: 0.5s;
+    cursor: pointer;
+    background-color: lightgray;
+  }
+  }
 }
 </style>

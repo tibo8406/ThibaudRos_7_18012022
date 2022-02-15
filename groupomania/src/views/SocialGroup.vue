@@ -1,13 +1,19 @@
 <template>
   <div class="Socialgroup">
-    Bienvenue {{$store.getters.completeUserName}}<br>
-    <button v-on:click="showUserAccount()" class="submit">Mon compte utilisateur</button>
+    <div class="headerSocial">
+      <span><i  v-on:click="showUserAccount()" class="fa fa-solid fa-user"></i></span>
+      <span><i class="fa fa-solid fa-door-open"></i></span>
+      <!--<button v-on:click="showUserAccount()" class="submit">
+        Mon compte utilisateur
+      </button>-->
+    </div>
+     Bienvenue <b>{{ $store.getters.completeUserName }}</b>
     <Post />
     <div class="wall">
       <div class="post" v-for="i in posts" :key="i.id">
         <div class="post_user">
           <div class="post_user_pic">
-            <img :src=i.userImg />
+            <img :src="i.userImg" />
           </div>
           <div class="post_user_info">
             <div class="post_user_info_name">
@@ -21,7 +27,7 @@
             {{ i.messages }}
           </div>
           <div class="post_content_media">
-            <img :src=i.urlMedia />
+            <img :src="i.urlMedia" />
           </div>
         </div>
         <div class="reactions">
@@ -83,38 +89,36 @@ export default {
   beforeCreate() {
     if (!sessionStorage.loggedIn) {
       router.push("Login");
-    } else{
-
-    axios
-      .get(
-        "http://localhost:3000/api/employees/" + this.$store.state.userId,
-        {}
-      )
-      .then((res) => {
-
-          this.$store.commit('updateUserInfo',res.data);
+    } else {
+      axios
+        .get(
+          "http://localhost:3000/api/employees/" + this.$store.state.userId,
+          {}
+        )
+        .then((res) => {
+          this.$store.commit("updateUserInfo", res.data);
         });
-      }},
+    }
+  },
   data() {
     return {
       posts: { type: Array },
     };
   },
-  methods:{
-    showUserAccount(){
+  methods: {
+    showUserAccount() {
       router.push("useraccount");
-
-    }
+    },
   },
   created: function () {
-        console.log(this.$store.state.userToken);
+    console.log(this.$store.state.userToken);
 
     axios
-      .get("http://localhost:3000/api/posts", { 
-          headers: { 
-            'Authorization': 'Bearer '+this.$store.state.userToken
-            },
-          })
+      .get("http://localhost:3000/api/posts", {
+        headers: {
+          Authorization: "Bearer " + this.$store.state.userToken,
+        },
+      })
       .then((res) => {
         const rep = res.data;
         this.posts = rep;
@@ -127,21 +131,22 @@ export default {
 </script>
 
 <style lang="scss">
-#entete {
-  padding: 1vh 4vw 1vh 4vw;
-  vertical-align: middle;
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid rgb(252, 228, 228, 0.7);
-  box-shadow: 0 10px 20px -1px rgb(252, 212, 211);
-  width: auto;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
-  justify-items: center;
-}
-.fas {
+
+.fa {
   font-size: 50px;
   color: rgb(252, 46, 7, 0.5);
+  &:hover{
+    cursor: pointer;
+    color:rgb(252, 46, 7, 1) ;
+  }
+}
+.headerSocial{
+  padding-bottom: 20px;
+  max-width: 500px;
+    display: flex;
+    justify-content: space-evenly;
+    margin: auto;
+
 }
 .wall {
   padding-top: 60px;
@@ -151,12 +156,11 @@ export default {
   min-height: 92vh;
 }
 .post {
-  height: fit-content;
-  display: grid;
+  display: block;
   border-radius: 5px;
   background-color: white;
   margin-top: 20px;
-  width: 30%;
+  max-width: 500px;
   box-shadow: 0.5px 0.5px 5px 0px silver;
   &_content {
     margin-top: 15px;
@@ -230,7 +234,7 @@ export default {
     border-top: 1px solid silver;
     border-bottom: 1px solid silver;
     height: 45px;
-    display: inline-flex;
+    display: flex;
     margin-left: 15px;
     margin-right: 15px;
     margin-bottom: 10px;

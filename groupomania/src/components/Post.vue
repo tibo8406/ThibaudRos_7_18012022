@@ -4,31 +4,40 @@
       <h1>Poster</h1>
     </div>
     <form>
-      <div class="ligne1champs">
-        <input
-          type="text"
-          id="messages"
+      <div class="postMessage">
+        <textarea
           name="messages"
-          placeholder="Votre message"
+          cols="1"
+          rows="4"
+          id="messages"
+          placeholder=" ... votre message"
           v-model="messages"
           required
+        ></textarea>
+      </div>
+      <div class="addImg" v-if="!image">
+        <label for="file" class="label-file"
+          ><i class="fa fa-solid fa-image"></i></label>
+        <input
+          type="file"
+          id="file"
+          class="input-file"
+          @change="onFileChange"
         />
-        <div class="addImg" v-if="!image">
-          <h2>Ajouter une image</h2>
-          <input type="file" id="file" @change="onFileChange" />
-        </div>
-        <div v-else>
-          <img :src="image" />
-          <button @click="removeurlMedia">Supprimer l'image</button>
-        </div>
       </div>
-      <div class="button">
-        <a href="#"
-          ><button @click.prevent="postSomething()" class="submit">
-            Poster
-          </button></a
-        >
+      <div class="postImg" v-else>
+        <img :src="image" />
+        <button class="button-file" @click="removeurlMedia">
+          Supprimer l'image
+        </button>
       </div>
+      <button
+        :class="{ 'submit--disabled': !validatedPostFields }"
+        @click.prevent="postSomething()"
+        class="submit"
+      >
+        Poster
+      </button>
     </form>
   </div>
 </template>
@@ -38,6 +47,15 @@ import axios from "axios";
 export default {
   data() {
     return { fileImg: {}, messages: "", image: "" };
+  },
+  computed: {
+    validatedPostFields: function () {
+      if (this.image || this.messages) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
   methods: {
     onFileChange(e) {
@@ -62,21 +80,24 @@ export default {
     },
     postSomething() {
       const formData = new FormData();
-      formData.append("post", JSON.stringify( {
-        nom_auteur: this.$store.state.userLastName,
-        prenom_auteur: this.$store.state.userFirstName,
-        poste_auteur: this.$store.state.userJob,
-        user_id: this.$store.state.userId,
-        messages: this.messages,
-      }));
+      formData.append(
+        "post",
+        JSON.stringify({
+          nom_auteur: this.$store.state.userLastName,
+          prenom_auteur: this.$store.state.userFirstName,
+          poste_auteur: this.$store.state.userJob,
+          user_id: this.$store.state.userId,
+          messages: this.messages,
+        })
+      );
       formData.append("image", this.fileImg);
 
       axios
-        .post("http://localhost:3000/api/posts",formData, { 
-          headers: { 
-            'Authorization': 'Bearer '+this.$store.state.userToken
-            },
-          })
+        .post("http://localhost:3000/api/posts", formData, {
+          headers: {
+            Authorization: "Bearer " + this.$store.state.userToken,
+          },
+        })
         .then(function () {
           location.reload();
         })
@@ -99,10 +120,68 @@ export default {
   display: grid;
   grid-template-columns: 1fr;
 }
-.addImg{
-display: grid;
+.addImg {
+  display: grid;
+  #file {
+    width: 50%;
+  }
 }
-input[type="text"] {
+.postImg {
+  padding-top: 15px;
+}
+.postMessage {
+  padding: 5px;
+  display: grid;
+  grid-template-columns: 1fr;
+  textarea {
+    width: -webkit-fill-available;
+    margin: auto;
+    color: #fc2e07;
+    font-size: 20px;
+    border-radius: 8px;
+    border: 1px solid #fc846c;
+    -webkit-transition: 0.5s;
+    outline: none;
+    transition: 0.5s;
+    &:focus {
+      border-radius: 8px;
+      border-color: #fc846c;
+      background-color: #fcb7a63d;
+    }
+    &::placeholder {
+      color: #fcb7a6;
+    }
+  }
+}
+.label-file {
+  padding-top: 10px;
+  padding-bottom: 30px;
+  cursor: pointer;
+  color: #fc846c;
+  font-weight: bold;
+}
+.label-file:hover {
+  color: #fc2e07;
+}
+.button-file {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  color: #fc846c;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fc846c;
+  font-weight: bold;
+  font-size: 15px;
+  &:hover {
+    color: #fc2e07;
+  }
+}
+// et on masque le input
+.input-file {
+  display: none;
+}
+/*input[type="text"] {
   margin: auto;
   display: grid;
   box-sizing: border-box;
@@ -117,12 +196,8 @@ input[type="text"] {
   &::placeholder {
     color: #fcb7a6;
   }
-  &:focus {
-    border-radius: 8px;
-    border: 1px solid #fc2e07;
-    background-color: #fcb7a63d;
-  }
-}
+
+}*/
 
 .forgot {
   padding: 25px 5px 25px 5px;
@@ -146,5 +221,8 @@ input[type="text"] {
   }
   text-decoration: none;
   color: #fcf2f1;
+}
+i {
+  font-size: 50px;
 }
 </style>

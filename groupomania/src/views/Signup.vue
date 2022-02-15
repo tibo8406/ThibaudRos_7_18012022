@@ -179,7 +179,7 @@ img {
   }
 }
 input[type="text"] {
-  display: grid;
+  /*display: grid;
   box-sizing: border-box;
   outline: none;
   color: #fc2e07;
@@ -187,7 +187,7 @@ input[type="text"] {
   border-radius: 8px;
   border: 1px solid #fc846c;
   -webkit-transition: 0.5s;
-  transition: 0.5s;
+  transition: 0.5s;*/
   &::placeholder {
     color: #fcb7a6;
   }

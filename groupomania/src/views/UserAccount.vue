@@ -1,5 +1,5 @@
 <template>
-  <div class="UserAccount">
+  <div class="userAccount">
     <h1 v-if="mode == 'saved'">Mon compte utilisateur</h1>
     <h1 v-else>Je modifie mon compte utilisateur</h1>
     <div class="userImg--default">
@@ -270,13 +270,18 @@ export default {
 </script>
 
 <style lang="scss">
+.userAccount{
+  border-radius: 8px;
+      border: 1px solid #fc846c;
+      max-width: 500px;
+      margin: auto;
+}
 .userImg {
   display: grid;
   justify-content: center;
   &--default {
     img {
-      max-height: 20%;
-      max-width: 20%;
+      max-width: 15%;
     }
   }
 }

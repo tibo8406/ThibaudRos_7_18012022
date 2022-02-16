@@ -12,13 +12,13 @@
       <div class="post" v-for="i in posts" :key="i.id">
         <div class="post_user">
           <div class="post_user_pic">
-            <img :src="i.userImg" />
+            <img :src="i.createur.urlImg" />
           </div>
           <div class="post_user_info">
             <div class="post_user_info_name">
-              {{ i.nom_auteur }} {{ i.prenom_auteur }}
+              {{ i.createur.prenom }} {{ i.createur.nom }}
             </div>
-            <div class="post_user_info_job">{{ i.poste_auteur }}</div>
+            <div class="post_user_info_job">{{ i.createur.poste }}</div>
           </div>
         </div>
         <div class="post_content">

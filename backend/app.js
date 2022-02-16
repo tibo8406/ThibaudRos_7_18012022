@@ -13,6 +13,7 @@ app.use('/images', express.static(path.join(__dirname, 'images'))); // configure
 
 try {
     Db.authenticate();
+    Db.sync();
     console.log('Connecté à la base de données MySQL!');
     Db.query("SHOW TABLES;").then(([results, metadata]) => {
         console.log(results);

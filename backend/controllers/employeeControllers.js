@@ -24,16 +24,25 @@ exports.updateEmployeeAccount = (req, res, next) => {
     const employeeObject = JSON.parse(req.body.employee);
     console.log(employeeObject);
     if (req.file && employeeObject.urlImgOld) {
-        const filename = employeeObject.urlImgOld.split('/images/')[1];
-        fs.unlink(`images/${filename}`, () => {});
-        employeeObject.urlImgNew = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`; // resout l'url urlImg, protocol = http on ajoute :// etc ...
+        if (employeeObject.urlImgOld === `${req.protocol}://${req.get('host')}/images/${process.env.DEFAULT_PROFIL_PICTURE}`) {
+            employeeObject.urlImgNew = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+
+        } else {
+            const filename = employeeObject.urlImgOld.split('/images/')[1];
+            fs.unlink(`images/${filename}`, () => {});
+            employeeObject.urlImgNew = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+        } // resout l'url urlImg, protocol = http on ajoute :// etc ...
     } else if (req.file && !employeeObject.urlImgOld) {
         employeeObject.urlImgNew = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`; // resout l'url urlImg, protocol = http on ajoute :// etc ...
     } else {
         if (!req.file && employeeObject.urlImgOld && !employeeObject.urlImgNew) {
-            const filename = employeeObject.urlImgOld.split('/images/')[1];
-            fs.unlink(`images/${filename}`, () => {});
-            employeeObject.urlImgNew = null;
+            if (employeeObject.urlImgOld === `${req.protocol}://${req.get('host')}/images/${process.env.DEFAULT_PROFIL_PICTURE}`) {
+                employeeObject.urlImgNew = `${req.protocol}://${req.get('host')}/images/${process.env.DEFAULT_PROFIL_PICTURE}`;
+            } else {
+                const filename = employeeObject.urlImgOld.split('/images/')[1];
+                fs.unlink(`images/${filename}`, () => {});
+                employeeObject.urlImgNew = `${req.protocol}://${req.get('host')}/images/${process.env.DEFAULT_PROFIL_PICTURE}`;
+            }
         } else if (!req.file && employeeObject.urlImgNew) {
             employeeObject.urlImgNew = employeeObject.urlImgOld;
         }

@@ -120,7 +120,6 @@ export default {
         urlImg: null,
       });
       sessionStorage.loggedIn="OffLine";
-      console.log(sessionStorage.loggedIn);
       router.push("Login");
     },
   },

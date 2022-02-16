@@ -98,8 +98,7 @@ export default {
           prenom: this.prenom,
           poste: this.poste,
         })
-        .then(function (response) {
-          console.log(response);
+        .then(function () {
           router.push('SocialGroup');
         })
         .catch(function (error) {

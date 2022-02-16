@@ -22,7 +22,7 @@
       </div>
       <div class="ligne1champs">
         <input
-          type="text"
+          type="password"
           id="password"
           name="password"
           placeholder="Password"
@@ -52,12 +52,8 @@ import axios from "axios";
 
 export default {
   beforeCreate() {
-    console.log(sessionStorage.loggedIn);
     if (sessionStorage.loggedIn === "OnLine") {
-      console.log(sessionStorage.loggedIn);
       router.push("SocialGroup");
-    } else {
-      console.log("else");
     }
   },
   data() {

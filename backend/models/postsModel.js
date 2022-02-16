@@ -1,15 +1,15 @@
 const Db = require('../db/db');
+const employeeSchema = require('./userModel');
+const Sequelize = require('sequelize');
+
 
 const postSchema = Db.define("posts", {
-    nom_auteur: { type: String, required: true, unique: true },
-    prenom_auteur: { type: String, required: true },
-    poste_auteur: { type: String, required: true },
-    user_id: { type: Number, required: true },
-    messages: { type: String, required: true },
-    urlMedia: { type: String, required: true },
+    messages: { type: Sequelize.STRING, required: true },
+    urlMedia: { type: Sequelize.STRING, required: true },
 
 });
 
-//userSchema.plugin(uniqueValidator);
+postSchema.belongsTo(employeeSchema, { onDelete: "cascade", as: "createur", foreignKey: { allowNull: false } })
+    //userSchema.plugin(uniqueValidator);
 
 module.exports = postSchema;

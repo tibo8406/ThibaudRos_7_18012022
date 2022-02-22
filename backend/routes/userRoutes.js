@@ -5,6 +5,5 @@ const checkFormCtrl = require('../middlewares/checkFormMiddleware');
 
 router.post('/signup', checkFormCtrl.checkSignupForm, userCtrl.signup);
 router.post('/login', checkFormCtrl.checkLoginForm, userCtrl.login);
-//router.get('/logout', userCtrl.logout);
 
 module.exports = router;

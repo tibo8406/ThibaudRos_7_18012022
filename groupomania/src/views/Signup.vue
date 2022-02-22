@@ -50,7 +50,7 @@
       </div>
       <div class="ligne1champs">
         <input
-          type="text"
+          type="password"
           id="password"
           name="password"
           placeholder="Password"

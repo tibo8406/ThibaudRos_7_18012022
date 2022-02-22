@@ -5,5 +5,8 @@ const multer = require('../middlewares/multerMiddleware');
 
 router.get('/', postsCtrl.showAllPosts);
 router.post('/', multer, postsCtrl.createOnePost);
+router.post('/comment', postsCtrl.commentOnePost);
+router.get('/comment', postsCtrl.findCommentForOnePost);
+
 
 module.exports = router;

@@ -13,8 +13,8 @@ app.use('/images', express.static(path.join(__dirname, 'images'))); // configure
 
 try {
     Db.authenticate();
+    console.log('Connecté à la base de données MySql!');
     Db.sync();
-    console.log('Connecté à la base de données MySQL!');
     Db.query("SHOW TABLES;").then(([results, metadata]) => {
         console.log(results);
     })
@@ -22,9 +22,9 @@ try {
     console.error('Impossible de se connecter, erreur suivante :', error);
 }
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*'); // origine qui à le droit d'écceder = tout le monde *
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization'); // autorise certain entete
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS'); // autorise certaine method
+    res.setHeader('Access-Control-Allow-Origin', '*'); // autorisation toute origine
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization'); // autorise headers
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS'); // autorisation  method
     next();
 });
 app.use('/api/auth', userRoutes);

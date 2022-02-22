@@ -46,7 +46,7 @@
         <div class="content_comments">
           <div class="post_user">
             <div class="post_user_pic">
-              <img src="userImg" />
+              <img :src="i.createur.urlImg" />
             </div>
             <div class="post_user_info">
               <div class="post_user_info_name">Thibaud Ros</div>
@@ -66,8 +66,18 @@
           </div>
         </div>
         <div class="comment">
-          <div class="comment_user_pic"><img src="userImg" /></div>
-          <div class="comment_action"><input type="text" /></div>
+          <div class="comment_user_pic"><img :src="i.createur.urlImg" /></div>
+          <div class="comment_action">
+            <textarea
+              name="comment"
+              cols="1"
+              rows="1"
+              :data-id="i.id"
+              placeholder=" ... votre commentaire"
+              v-model="i.id"
+              @keyup.space="postComment()"
+            ></textarea>
+          </div>
         </div>
       </div>
       <router-view></router-view>
@@ -86,7 +96,7 @@ export default {
     Post,
   },
   beforeCreate() {
-    if (sessionStorage.loggedIn!="OnLine") {
+    if (sessionStorage.loggedIn != "OnLine") {
       router.push("Login");
     } else {
       axios
@@ -101,7 +111,8 @@ export default {
   },
   data() {
     return {
-      posts: { type: Array },
+      posts: [],
+      comments: [],
     };
   },
   methods: {
@@ -119,8 +130,24 @@ export default {
         password: null,
         urlImg: null,
       });
-      sessionStorage.loggedIn="OffLine";
+      sessionStorage.loggedIn = "OffLine";
       router.push("Login");
+    },
+    postComment: function (event) {
+      const formData = new FormData();
+      const id = event.target.getAttribute("data-id");
+      formData.append(
+        "comment",
+        JSON.stringify({
+          postId: id,
+          message: this.id,
+        })
+      );
+      axios.post("http://localhost:3000/api/posts/comment", FormData, {
+        headers: {
+          Authorization: "Bearer " + this.$store.state.userToken,
+        },
+      });
     },
   },
   created: function () {
@@ -131,14 +158,27 @@ export default {
         },
       })
       .then((res) => {
-        const rep = res.data;
-        this.posts = rep;
+        this.posts = res.data;
       })
       .catch(function (error) {
         console.log(error);
       });
   },
 };
+/*axios
+          .get("http://localhost:"+process.env.BDD_PORT+"/api/posts/comment/", {
+            headers: {
+              Authorization: "Bearer " + this.$store.state.userToken,
+            },
+          })
+          .then((res) => {
+            const rep = res.data;
+            this.comments = rep;
+            console.log(rep);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });*/
 </script>
 
 <style lang="scss">
@@ -224,10 +264,14 @@ export default {
       }
     }
     &_pic {
-      max-width: 50px;
-      max-height: 50px;
+      display: table-cell;
+      vertical-align: middle;
+      padding-top: 1.5px;
       img {
+        border: 2px solid rgb(252, 46, 7, 0.5);
         border-radius: 25px;
+        width: 45px;
+        height: 45px;
       }
     }
   }
@@ -282,8 +326,11 @@ export default {
     display: grid;
     font-size: 12px;
     .post_user_pic {
-      max-height: 30px;
-      max-width: 30px;
+      img {
+        border: 2px solid lightgray;
+        height: 25px;
+        width: 25px;
+      }
     }
     .post_user_info_name {
       height: 15px;
@@ -309,27 +356,33 @@ export default {
 }
 .comment {
   height: 30px;
-  display: inline-flex;
+  display: flex;
   padding: 0px 15px 15px 15px;
-  min-width: fit-content;
   &_user_pic {
     margin-right: 15px;
-    max-width: 6%;
     img {
+      border: 2px solid lightgray;
+      height: 25px;
+      width: 25px;
       border-radius: 20px;
     }
   }
   &_action {
-    width: auto;
-    input {
+    width: 100%;
+    textarea {
+      width: auto;
+      border-radius: 8px;
+      -webkit-transition: 0.5s;
+      outline: none;
+      transition: 0.5s;
+      height: 23px;
       background: rgba($color: silver, $alpha: 0.25);
-      min-width: 100%;
-      border: none;
-      height: 30px;
+      width: 100%;
       color: grey;
+      border: none;
       &:focus {
         background: rgba($color: silver, $alpha: 0.25);
-        border: 1px solid grey;
+        border: 1px solid lightgray;
       }
     }
   }

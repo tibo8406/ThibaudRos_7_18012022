@@ -31,9 +31,9 @@ exports.updateEmployeeAccount = (req, res, next) => {
             const filename = employeeObject.urlImgOld.split('/images/')[1];
             fs.unlink(`images/${filename}`, () => {});
             employeeObject.urlImgNew = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
-        } // resout l'url urlImg, protocol = http on ajoute :// etc ...
+        }
     } else if (req.file && !employeeObject.urlImgOld) {
-        employeeObject.urlImgNew = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`; // resout l'url urlImg, protocol = http on ajoute :// etc ...
+        employeeObject.urlImgNew = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
     } else {
         if (!req.file && employeeObject.urlImgOld && !employeeObject.urlImgNew) {
             if (employeeObject.urlImgOld === `${req.protocol}://${req.get('host')}/images/${process.env.DEFAULT_PROFIL_PICTURE}`) {
@@ -74,8 +74,6 @@ exports.updateEmployeeAccount = (req, res, next) => {
 
 exports.deleteAccount = (req, res, next) => {
     Employee.destroy({ where: { id: req.params.id } })
-        /*.then(res => res.status(200).json({ message: 'Utilisateur supprimé !' }))
-        .catch(error => res.status(400).json({ message: 'Erreur destroy' }));*/
         .then(function(deletedRecord) {
             if (deletedRecord === 1) {
                 res.status(200).json({ message: "Compte supprimé" });

@@ -12,6 +12,4 @@ const employeeSchema = Db.define("employees", {
 
 });
 
-//userSchema.plugin(uniqueValidator);
-
 module.exports = employeeSchema;

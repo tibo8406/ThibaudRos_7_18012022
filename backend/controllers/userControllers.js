@@ -46,11 +46,3 @@ exports.login = (req, res, next) => {
         })
         .catch(error => res.status(500).json({ error }));
 };
-
-
-/*exports.logout = (req, res) => {
-    res.status(200).json({
-        token: ('jwt', '', "1")
-    })
-    res.redirect('/');
-};*/

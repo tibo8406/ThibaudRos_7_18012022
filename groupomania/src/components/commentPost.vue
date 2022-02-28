@@ -47,9 +47,6 @@ export default {
         });
     },
   },
-  created: function () {
-    console.log(this.comment);
-  },
 };
 </script>
 <style></style>

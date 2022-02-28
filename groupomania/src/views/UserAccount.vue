@@ -238,7 +238,7 @@ export default {
 
       axios
         .put(
-          "http://localhost:"+process.env.BDD_PORT+"/api/employees/" + this.$store.state.userId,
+          "http://localhost:3000/api/employees/" + this.$store.state.userId,
           formData
         )
         .then((res) => {

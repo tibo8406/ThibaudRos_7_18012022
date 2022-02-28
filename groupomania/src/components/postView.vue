@@ -18,7 +18,7 @@
       <commentPost :comment="post.comments" />
       <div class="comment">
         <div class="comment_user_pic">
-          <!--<img :src="this.$store.state.userImg" />-->
+          <img :src="$store.state.userImg" />
         </div>
         <div class="comment_action">
           <textarea
@@ -69,6 +69,9 @@ export default {
           console.log(error);
         });
     },
+  },
+  created: function () {
+      console.log(this.$store.state);
   },
 
 };

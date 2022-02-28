@@ -7,6 +7,9 @@ import SocialGroup from '../views/SocialGroup.vue'
 import Authentification from '../views/Authentification.vue'
 import Post from '../components/Post.vue'
 import UserAccount from '../views/UserAccount.vue'
+import postView from '../components/postView.vue'
+import commentPost from '../components/commentPost.vue'
+
 
 
 
@@ -19,10 +22,13 @@ const routes = [
     { path: '/', component: App, redirect: 'Login' },
     { path: '/Auth', component: Authentification, redirect: 'Login' },
     { path: '/Login', component: Login },
-    { path: '/SocialGroup', component: SocialGroup },
-    { path: '/Signup', component: Signup },
-    { path: '/Post', component: Post },
-    { path: '/useraccount', component: UserAccount }
+    { path: '/SocialGroup', component: SocialGroup, },
+    { path: '/Signup', component: Signup, },
+    { path: '/Post', component: Post, },
+    { path: '/useraccount', component: UserAccount, },
+    { path: '/commentPost', component: commentPost, },
+    { path: '/postView', component: postView, }
+
     /*{path: '/',
     name: 'App',
     component: App,

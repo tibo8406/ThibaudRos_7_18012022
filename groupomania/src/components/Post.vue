@@ -1,7 +1,7 @@
 <template>
   <div class="form_">
     <div class="form_title">
-      <h1>Poster</h1>
+      <h1>Poster {{ name }}</h1>
     </div>
     <form>
       <div class="postMessage">
@@ -45,6 +45,9 @@
 <script>
 import axios from "axios";
 export default {
+  props:[
+    "name"
+  ],
   data() {
     return { fileImg: {}, messages: "", image: "" };
   },
@@ -78,6 +81,7 @@ export default {
       this.fileImg = null;
     },
     postSomething() {
+      //this.$emit("postSomething", 123);
       const formData = new FormData();
       formData.append(
         "post",

@@ -88,8 +88,9 @@ exports.commentOnePost = (req, res, next) => {
     }
 };
 
-/*exports.findCommentForOnePost = (req, res, next) => {
+exports.findCommentForOnePost = (req, res, next) => {
     Comment.findAll({
+            where: { postId: req.params.id },
             order: [
                 ['id', 'ASC'],
             ],
@@ -109,7 +110,7 @@ exports.commentOnePost = (req, res, next) => {
             }
 
         });
-};*/
+};
 
 exports.likeOnePost = (req, res, next) => {
     console.log("tu es la");

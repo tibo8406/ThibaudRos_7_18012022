@@ -8,8 +8,11 @@
     </div>
     Bienvenue <b>{{ $store.getters.completeUserName }}</b>
     <Post />
-    <div class="wall">
-      <div class="post" v-for="i in posts" :key="i.id">
+    <!-- :name="'ok'" @postSomething="postSomething" -->
+
+    <postView :posts="posts" />
+
+      <!--<div class="post" v-for="i in posts" :key="i.id">
         <div class="post_user">
           <div class="post_user_pic">
             <img :src="i.createur.urlImg" />
@@ -79,14 +82,15 @@
             ></textarea>
           </div>
         </div>
-      </div>
-      <router-view></router-view>
-    </div>
+      </div>-->
+
   </div>
 </template>
 
 <script>
-import Post from "../components/Post.vue";
+import Post from '../components/Post.vue';
+import postView from '../components/postView.vue';
+
 import router from "../router/index";
 import axios from "axios";
 
@@ -94,6 +98,7 @@ export default {
   name: "SocialGroup",
   components: {
     Post,
+    postView,
   },
   beforeCreate() {
     if (sessionStorage.loggedIn != "OnLine") {
@@ -134,12 +139,10 @@ export default {
       sessionStorage.loggedIn = "OffLine";
       router.push("Login");
     },
-    /*clickOnComment(id) {
-      const el ="textarea"+id;
-      console.log(el);
-      document.getElementById(el).focus();
+    /*postSomething(input){
+      console.log(input);
     },*/
-    postComment(id) {
+    /*postComment(id) {
       axios
         .post(
           "http://localhost:3000/api/posts/" + id + "/comment",
@@ -156,24 +159,21 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
-    },
-    likeOnePost(id) {
+    },*/
+    /*likeOnePost(id) {
       axios
-        .post(
-          "http://localhost:3000/api/posts/" + id + "/like",
-          {
-            headers: {
-              Authorization: "Bearer " + this.$store.state.userToken,
-            },
-          }
-        )
+        .post("http://localhost:3000/api/posts/" + id + "/like", {
+          headers: {
+            Authorization: "Bearer " + this.$store.state.userToken,
+          },
+        })
         .then(() => {
           window.location.reload();
         })
         .catch(function (error) {
           console.log(error);
         });
-    },
+    },*/
   },
   created: function () {
     axios
@@ -184,27 +184,13 @@ export default {
       })
       .then((res) => {
         this.posts = res.data;
-        console.log(this.posts);
+        //console.log(this.posts);
       })
       .catch(function (error) {
         console.log(error);
       });
   },
 };
-/*axios
-          .get("http://localhost:"+process.env.BDD_PORT+"/api/posts/comment/", {
-            headers: {
-              Authorization: "Bearer " + this.$store.state.userToken,
-            },
-          })
-          .then((res) => {
-            const rep = res.data;
-            this.comments = rep;
-            console.log(rep);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });*/
 </script>
 
 <style lang="scss">

@@ -36,32 +36,32 @@
           <div class="reactions_nbcomments">5 Commentaires</div>
         </div>
         <div class="actions">
-          <div class="actions_like">
+          <div class="actions_like" @click="likeOnePost(i.id)">
             <i class="far fa-thumbs-up"></i> J'aime !
           </div>
-          <div class="actions_comment">
+          <div class="actions_comment" @click="clickOnComment(i.id)">
             <i class="far fa-comment"> Commenter</i>
           </div>
         </div>
-        <div class="content_comments">
+        <div
+          class="content_comments"
+          v-for="comment in i.comments"
+          :key="comment.id"
+        >
           <div class="post_user">
             <div class="post_user_pic">
-              <img :src="i.createur.urlImg" />
+              <img :src="comment.createur.urlImg" />
             </div>
             <div class="post_user_info">
-              <div class="post_user_info_name">Thibaud Ros</div>
-              <div class="post_user_info_job">Developpeur Web</div>
+              <div class="post_user_info_name">
+                {{ comment.createur.prenom }} {{ comment.createur.nom }}
+              </div>
+              <div class="post_user_info_job">{{ comment.createur.poste }}</div>
             </div>
           </div>
           <div class="post_content">
             <div class="post_content_text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-              non ultrices ligula. Nullam augue magna, bibendum sed nisl eget,
-              suscipit blandit tortor. Cras ut dolor vitae felis auctor
-              tristique. Praesent. Lorem ipsum dolor sit amet, consectetur
-              adipiscing elit. Curabitur non ultrices ligula. Nullam augue
-              magna, bibendum sed nisl eget, suscipit blandit tortor. Cras ut
-              dolor vitae felis auctor tristique. Praesent.
+              {{ comment.comment }}
             </div>
           </div>
         </div>
@@ -72,10 +72,10 @@
               name="comment"
               cols="1"
               rows="1"
-              :data-id="i.id"
+              :id="textarea[i.id]"
               placeholder=" ... votre commentaire"
-              v-model="i.id"
-              @keyup.space="postComment()"
+              v-model="textarea[i.id]"
+              @keyup.enter="postComment(i.id)"
             ></textarea>
           </div>
         </div>
@@ -113,6 +113,7 @@ export default {
     return {
       posts: [],
       comments: [],
+      textarea: [],
     };
   },
   methods: {
@@ -133,21 +134,45 @@ export default {
       sessionStorage.loggedIn = "OffLine";
       router.push("Login");
     },
-    postComment: function (event) {
-      const formData = new FormData();
-      const id = event.target.getAttribute("data-id");
-      formData.append(
-        "comment",
-        JSON.stringify({
-          postId: id,
-          message: this.id,
+    /*clickOnComment(id) {
+      const el ="textarea"+id;
+      console.log(el);
+      document.getElementById(el).focus();
+    },*/
+    postComment(id) {
+      axios
+        .post(
+          "http://localhost:3000/api/posts/" + id + "/comment",
+          { message: this.textarea[id] },
+          {
+            headers: {
+              Authorization: "Bearer " + this.$store.state.userToken,
+            },
+          }
+        )
+        .then(() => {
+          window.location.reload();
         })
-      );
-      axios.post("http://localhost:3000/api/posts/comment", FormData, {
-        headers: {
-          Authorization: "Bearer " + this.$store.state.userToken,
-        },
-      });
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    likeOnePost(id) {
+      axios
+        .post(
+          "http://localhost:3000/api/posts/" + id + "/like",
+          {
+            headers: {
+              Authorization: "Bearer " + this.$store.state.userToken,
+            },
+          }
+        )
+        .then(() => {
+          window.location.reload();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
   },
   created: function () {
@@ -159,6 +184,7 @@ export default {
       })
       .then((res) => {
         this.posts = res.data;
+        console.log(this.posts);
       })
       .catch(function (error) {
         console.log(error);
@@ -210,6 +236,8 @@ export default {
   background-color: white;
   margin-top: 20px;
   max-width: 500px;
+
+  width: 90%;
   box-shadow: 0.5px 0.5px 5px 0px silver;
   &_content {
     margin-top: 15px;
@@ -219,7 +247,6 @@ export default {
       img {
         min-width: 100%;
         min-height: 100%;
-        width: auto;
         height: auto;
       }
     }
@@ -325,39 +352,47 @@ export default {
   .content_comments {
     display: grid;
     font-size: 12px;
-    .post_user_pic {
-      img {
-        border: 2px solid lightgray;
-        height: 25px;
-        width: 25px;
+    .post_user {
+      height: 40px;
+      &_pic {
+        img {
+          border: 2px solid lightgray;
+          height: 25px;
+          width: 25px;
+        }
       }
-    }
-    .post_user_info_name {
-      height: 15px;
-      line-height: 15px;
-      text-align: left;
-      font-size: 14px;
-    }
-    .post_user_info_job {
-      font-size: 13px;
-      height: 15px;
-      line-height: 15px;
-      text-align: left;
+      &_info_name {
+        height: 15px;
+        line-height: 15px;
+        text-align: left;
+        font-size: 14px;
+      }
+      &_info_job {
+        font-size: 13px;
+        height: 15px;
+        line-height: 15px;
+        text-align: left;
+      }
     }
     .post_content {
       margin-top: 0px;
       margin-bottom: 0px;
-    }
-    .post_content_text {
-      padding-top: 5px;
-      padding-bottom: 5px;
+      &_text {
+        margin-left: 50px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin-bottom: 0px;
+        border: none;
+        background: rgba(192, 192, 192, 0.15);
+        border-radius: 5px;
+      }
     }
   }
 }
 .comment {
   height: 30px;
   display: flex;
-  padding: 0px 15px 15px 15px;
+  padding: 15px 15px 15px 15px;
   &_user_pic {
     margin-right: 15px;
     img {

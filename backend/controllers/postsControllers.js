@@ -1,6 +1,8 @@
 const Post = require('../models/postsModel');
 const employeeSchema = require('../models/userModel');
+const likesSchema = require('../models/likesModel');
 const Comment = require('../models/commentsModel');
+const { Op } = require('sequelize');
 require('dotenv').config();
 
 
@@ -13,14 +15,46 @@ exports.showAllPosts = (req, res, next) => {
             ],
 
             include: [{
-                model: employeeSchema,
-                as: 'createur',
-                attributes: ['nom', 'prenom', 'poste', 'urlImg'],
+                    model: employeeSchema,
+                    as: 'createur',
+                    attributes: ['nom', 'prenom', 'poste', 'urlImg'],
 
-            }],
+                },
+                {
+                    model: Comment,
+                    as: 'comments',
+                    attributes: ['comment'],
+                    order: [
+                        ['id', 'ASC'],
+                    ],
+
+                    include: [{
+                        model: employeeSchema,
+                        as: 'createur',
+                        attributes: ['nom', 'prenom', 'poste', 'urlImg'],
+
+                    }],
+
+                },
+                {
+                    model: likesSchema,
+                    as: 'likes',
+                    attributes: ['liked'],
+
+                    include: [{
+                        model: employeeSchema,
+                        as: 'createur',
+                        attributes: ['id'],
+
+                    }]
+                }
+            ],
         })
         .then(posts => res.status(200).json(posts))
-        .catch(error => res.status(400).json({ error }));
+        .catch(error => {
+            console.log(error);
+            res.status(400).json({ error })
+        });
 
 };
 
@@ -40,17 +74,21 @@ exports.createOnePost = (req, res, next) => {
 };
 
 exports.commentOnePost = (req, res, next) => {
-    const commentToCreate = Comment.build({
-        postId: req.body.postId,
-        comment: req.body.message,
-        createurId: req.token.id
-    });
-    commentToCreate.save()
-        .then(() => res.status(201).json({ message: 'Commentaire enregistré !' }))
-        .catch(error => res.status(400).json({ error }))
+    if (req.body.message) {
+        const commentToCreate = Comment.build({
+            postId: req.params.id,
+            comment: req.body.message,
+            createurId: req.token.id
+        });
+        commentToCreate.save()
+            .then(() => res.status(201).json({ message: 'Commentaire enregistré !' }))
+            .catch(error => res.status(400).json({ error }))
+    } else {
+        return res.status(405).json({ message: "Le commentaire est vide" });
+    }
 };
 
-exports.findCommentForOnePost = (req, res, next) => {
+/*exports.findCommentForOnePost = (req, res, next) => {
     Comment.findAll({
             order: [
                 ['id', 'ASC'],
@@ -71,27 +109,36 @@ exports.findCommentForOnePost = (req, res, next) => {
             }
 
         });
-};
-/*exports.likeOnePost = (req, res, next) => {
-    Like.findOne({ where: { id: req.params.id } })
-        .then((thisPost) => {
-            if (thisPost !== null) {
-                Like.update({
-                        nb_likes: +1,
-                    }, {
-                        where: { postId: req.params.id }
-                    })
-                    .then(() => res.status(201).json({ message: 'Post liké !' }))
-                    .catch(error => res.status(400).json({ error }));
-            } else {
-                const likeToCreate = Like.build({
-                    postId: req.params.id,
-                    nb_likes: +1
-                })
-                likeToCreate.save()
-                    .then(() => res.status(201).json({ message: 'Like créé et Post liké !' }))
-                    .catch(error => res.status(400).json({ error }));
-            }
+};*/
 
-        });
-}*/
+exports.likeOnePost = (req, res, next) => {
+    console.log("tu es la");
+    likesSchema.findOne({
+            where: {
+                [Op.and]: [{ createurId: req.token.id }, { postId: req.params.id }]
+            }
+        })
+        .then((thisLike) => {
+            console.log(thisLike);
+            if (thisLike !== null) {
+                likesSchema.destroy({
+                        where: {
+                            [Op.and]: [{ createurId: req.token.id }, { postId: req.params.id }]
+                        }
+                    })
+                    .then(() => res.status(201).json({ message: 'Like supprimé !' }))
+                    .catch(error => res.status(400).json({ error: "erreur suppression like" }))
+
+            } else {
+                const likeToCreate = likesSchema.build({
+                    liked: true,
+                    postId: req.params.id,
+                    createurId: req.token.id
+                });
+                likeToCreate.save()
+                    .then(() => res.status(201).json({ message: 'Like enregistré !' }))
+                    .catch(error => res.status(400).json({ error: "erreur save like" }))
+            }
+        })
+        .catch(error => res.status(400).json({ error: "erreur findone" }));
+};

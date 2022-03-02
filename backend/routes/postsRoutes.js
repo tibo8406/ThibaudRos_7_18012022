@@ -5,7 +5,7 @@ const multer = require('../middlewares/multerMiddleware');
 
 router.get('/', postsCtrl.showAllPosts);
 router.post('/', multer, postsCtrl.createOnePost);
-router.post('/:id/like', postsCtrl.likeOnePost);
+//router.post('/:id/like', postsCtrl.likeOnePost);
 router.post('/:id/comment', postsCtrl.commentOnePost);
 router.get('/:id/comment', postsCtrl.findCommentForOnePost);
 

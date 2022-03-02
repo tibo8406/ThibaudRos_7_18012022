@@ -21,12 +21,17 @@ exports.showAllPosts = (req, res, next) => {
 
                 },
                 {
+
                     model: Comment,
+
                     as: 'comments',
-                    attributes: ['comment'],
+                    separate: true,
+                    attributes: ['comment', 'id'],
                     order: [
-                        ['id', 'ASC'],
+                        ['id', 'ASC']
                     ],
+
+
 
                     include: [{
                         model: employeeSchema,
@@ -112,8 +117,7 @@ exports.findCommentForOnePost = (req, res, next) => {
         });
 };
 
-exports.likeOnePost = (req, res, next) => {
-    console.log("tu es la");
+/*exports.likeOnePost = (req, res, next) => {
     likesSchema.findOne({
             where: {
                 [Op.and]: [{ createurId: req.token.id }, { postId: req.params.id }]
@@ -142,4 +146,4 @@ exports.likeOnePost = (req, res, next) => {
             }
         })
         .catch(error => res.status(400).json({ error: "erreur findone" }));
-};
+};*/

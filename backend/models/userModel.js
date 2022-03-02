@@ -7,7 +7,7 @@ const employeeSchema = Db.define("employees", {
     nom: { type: Sequelize.STRING, required: true },
     prenom: { type: Sequelize.STRING, required: true },
     poste: { type: Sequelize.STRING, required: true },
-    urlImg: { type: Sequelize.STRING },
+    urlImg: { type: Sequelize.STRING, defaultValue: "http://localhost:3000/images/user_default.jpg" },
     //    isAdmin: { type: Sequelize.BOOLEAN, defaultValue: false }
 
 });

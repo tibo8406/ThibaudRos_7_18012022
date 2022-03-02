@@ -8,82 +8,7 @@
     </div>
     Bienvenue <b>{{ $store.getters.completeUserName }}</b>
     <Post />
-    <!-- :name="'ok'" @postSomething="postSomething" -->
-
     <postView :posts="posts" />
-
-      <!--<div class="post" v-for="i in posts" :key="i.id">
-        <div class="post_user">
-          <div class="post_user_pic">
-            <img :src="i.createur.urlImg" />
-          </div>
-          <div class="post_user_info">
-            <div class="post_user_info_name">
-              {{ i.createur.prenom }} {{ i.createur.nom }}
-            </div>
-            <div class="post_user_info_job">{{ i.createur.poste }}</div>
-          </div>
-        </div>
-        <div class="post_content">
-          <div class="post_content_text">
-            {{ i.messages }}
-          </div>
-          <div class="post_content_media">
-            <img :src="i.urlMedia" />
-          </div>
-        </div>
-        <div class="reactions">
-          <div class="reactions_nblikes">
-            <i class="far fa-thumbs-up"></i> 11
-          </div>
-          <div class="reactions_nbcomments">5 Commentaires</div>
-        </div>
-        <div class="actions">
-          <div class="actions_like" @click="likeOnePost(i.id)">
-            <i class="far fa-thumbs-up"></i> J'aime !
-          </div>
-          <div class="actions_comment" @click="clickOnComment(i.id)">
-            <i class="far fa-comment"> Commenter</i>
-          </div>
-        </div>
-        <div
-          class="content_comments"
-          v-for="comment in i.comments"
-          :key="comment.id"
-        >
-          <div class="post_user">
-            <div class="post_user_pic">
-              <img :src="comment.createur.urlImg" />
-            </div>
-            <div class="post_user_info">
-              <div class="post_user_info_name">
-                {{ comment.createur.prenom }} {{ comment.createur.nom }}
-              </div>
-              <div class="post_user_info_job">{{ comment.createur.poste }}</div>
-            </div>
-          </div>
-          <div class="post_content">
-            <div class="post_content_text">
-              {{ comment.comment }}
-            </div>
-          </div>
-        </div>
-        <div class="comment">
-          <div class="comment_user_pic"><img :src="i.createur.urlImg" /></div>
-          <div class="comment_action">
-            <textarea
-              name="comment"
-              cols="1"
-              rows="1"
-              :id="textarea[i.id]"
-              placeholder=" ... votre commentaire"
-              v-model="textarea[i.id]"
-              @keyup.enter="postComment(i.id)"
-            ></textarea>
-          </div>
-        </div>
-      </div>-->
-
   </div>
 </template>
 
@@ -139,41 +64,6 @@ export default {
       sessionStorage.loggedIn = "OffLine";
       router.push("Login");
     },
-    /*postSomething(input){
-      console.log(input);
-    },*/
-    /*postComment(id) {
-      axios
-        .post(
-          "http://localhost:3000/api/posts/" + id + "/comment",
-          { message: this.textarea[id] },
-          {
-            headers: {
-              Authorization: "Bearer " + this.$store.state.userToken,
-            },
-          }
-        )
-        .then(() => {
-          window.location.reload();
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },*/
-    /*likeOnePost(id) {
-      axios
-        .post("http://localhost:3000/api/posts/" + id + "/like", {
-          headers: {
-            Authorization: "Bearer " + this.$store.state.userToken,
-          },
-        })
-        .then(() => {
-          window.location.reload();
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },*/
   },
   created: function () {
     axios
@@ -222,7 +112,7 @@ export default {
   background-color: white;
   margin-top: 20px;
   max-width: 500px;
-
+  height: fit-content;
   width: 90%;
   box-shadow: 0.5px 0.5px 5px 0px silver;
   &_content {

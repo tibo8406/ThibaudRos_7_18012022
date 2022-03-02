@@ -81,7 +81,6 @@ export default {
       this.fileImg = null;
     },
     postSomething() {
-      //this.$emit("postSomething", 123);
       const formData = new FormData();
       formData.append(
         "post",

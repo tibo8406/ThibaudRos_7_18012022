@@ -1,7 +1,6 @@
 <template>
   <div class="wall">
     <div class="post" v-for="post in posts" :key="post.id">
-      <!-- v-for="i in posts" :key="i.id"-->
       <div class="post_user">
         <div class="post_user_pic"><img :src="post.createur.urlImg" /></div>
         <div class="post_user_info">

@@ -54,6 +54,8 @@ export default {
   height: 30px;
   display: flex;
   padding: 15px 15px 15px 15px;
+  margin-top: 35px;
+  border-top: 1px solid lightgray;
   &_user_pic {
     margin-right: 15px;
     img {

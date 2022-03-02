@@ -83,6 +83,9 @@ export default {
 </script>
 
 <style lang="scss">
+body{
+margin: 0;
+}
 .fa {
   font-size: 50px;
   color: rgb(252, 46, 7, 0.5);
@@ -104,6 +107,8 @@ export default {
   justify-items: center;
   background-color: rgb(252, 228, 228, 0.3);
   min-height: 92vh;
+    padding-bottom: 45px;
+
 }
 
 

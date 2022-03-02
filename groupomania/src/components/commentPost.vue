@@ -49,4 +49,118 @@ export default {
   },
 };
 </script>
-<style></style>
+<style lang="scss">
+.comment{
+  height: 30px;
+  display: flex;
+  padding: 15px 15px 15px 15px;
+  &_user_pic {
+    margin-right: 15px;
+    img {
+      border: 2px solid lightgray;
+      height: 25px;
+      width: 25px;
+      border-radius: 20px;
+    }
+  }
+  &_action {
+    width: 100%;
+    textarea {
+      width: auto;
+      border-radius: 8px;
+      -webkit-transition: 0.5s;
+      outline: none;
+      transition: 0.5s;
+      height: 23px;
+      background: rgba($color: silver, $alpha: 0.25);
+      width: 100%;
+      color: grey;
+      border: none;
+      &:focus {
+        background: rgba($color: silver, $alpha: 0.25);
+        border: 1px solid lightgray;
+      }
+    }
+  }
+}
+.actions {
+    border-top: 1px solid silver;
+    border-bottom: 1px solid silver;
+    height: 45px;
+    display: flex;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    &_like {
+      border-radius: 10px;
+      width: 50%;
+      margin: 4px;
+      height: 37px;
+      line-height: 37px;
+      text-align: center;
+      &:hover {
+        cursor: pointer;
+        background: rgba($color: silver, $alpha: 0.25);
+        color: grey;
+      }
+    }
+    &_comment {
+      height: 37px;
+      line-height: 37px;
+      text-align: center;
+      border-radius: 10px;
+      width: 50%;
+      margin: 4px;
+      &:hover {
+        cursor: pointer;
+        background: rgba($color: silver, $alpha: 0.25);
+        color: grey;
+      }
+    }
+  }
+  .fa-comment,
+  .fa-thumbs-up {
+    font-size: 20px;
+  }
+  .content_comments {
+    display: grid;
+    font-size: 12px;
+    .post_user {
+      height: 40px;
+      &_pic {
+        img {
+          border: 2px solid lightgray;
+          height: 25px;
+          width: 25px;
+        }
+      }
+      &_info_name {
+        height: 15px;
+        line-height: 15px;
+        text-align: left;
+        font-size: 14px;
+      }
+      &_info_job {
+        font-size: 13px;
+        height: 15px;
+        line-height: 15px;
+        text-align: left;
+      }
+    }
+    .post_content {
+      margin-top: 0px;
+      margin-bottom: 0px;
+      &_text {
+        margin-left: 50px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 10px;
+        margin-bottom: 0px;
+        border: none;
+        background: rgba(192, 192, 192, 0.15);
+        border-radius: 5px;
+        max-width: 60%;
+      }
+    }
+  }
+</style>

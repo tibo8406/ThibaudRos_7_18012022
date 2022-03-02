@@ -22,7 +22,7 @@ exports.findOneEmployee = (req, res, next) => {
 
 exports.updateEmployeeAccount = (req, res, next) => {
     const employeeObject = JSON.parse(req.body.employee);
-    console.log(employeeObject);
+
     if (req.file && employeeObject.urlImgOld) {
         if (employeeObject.urlImgOld === `${req.protocol}://${req.get('host')}/images/${process.env.DEFAULT_PROFIL_PICTURE}`) {
             employeeObject.urlImgNew = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;

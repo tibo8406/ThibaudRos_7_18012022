@@ -43,11 +43,27 @@
 </template>
 
 <script>
+import router from "../router/index";
+
 import axios from "axios";
 export default {
   props:[
     "name"
   ],
+  beforeCreate() {
+    if (sessionStorage.loggedIn != "OnLine") {
+      router.push("Login");
+    } else {
+      axios
+        .get(
+          "http://localhost:3000/api/employees/" + this.$store.state.userId,
+          {}
+        )
+        .then((res) => {
+          this.$store.commit("updateUserInfo", res.data);
+        });
+    }
+  },
   data() {
     return { fileImg: {}, messages: "", image: "" };
   },

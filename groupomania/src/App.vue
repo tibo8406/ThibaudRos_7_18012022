@@ -20,6 +20,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: grey;
+  color: #595959;
 }
 </style>

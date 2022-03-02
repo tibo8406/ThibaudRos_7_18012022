@@ -6,15 +6,14 @@
         @click.prevent="switchToSavedAccount()"
         class="fa fa-solid fa-angle-left"
         alt="Revenir en arrière"
-                title="Revenir en arrière"
-
+        title="Revenir en arrière"
       ></i>
       <i
         v-if="mode == 'saved'"
         @click="backToFeed()"
         class="fa fa-solid fa-angle-left"
-                alt="Revenir au feed"
-                title="Revenir au feed"
+        alt="Revenir au feed"
+        title="Revenir au feed"
       ></i>
     </div>
     <div class="userAccount">
@@ -24,11 +23,16 @@
         <img
           v-if="!image && mode == 'saved'"
           src="http://localhost:3000/images/user_default.jpg"
+          alt="Votre photo de profil"
         />
       </div>
       <div class="userImg" v-if="!image && mode == 'modify'">
         <h2>Photo de profil</h2>
-        <img v-if="mode == 'saved' && image" :src="image" />
+        <img
+          v-if="mode == 'saved' && image"
+          :src="image"
+          alt="Votre photo de profil"
+        />
         <input
           v-if="mode == 'modify'"
           type="file"
@@ -37,7 +41,7 @@
         />
       </div>
       <div class="userImg--default" v-else>
-        <img :src="image" />
+        <img :src="image" alt="Votre photo de profil" />
         <br />
         <button v-if="mode == 'modify'" @click="removeurlMedia">
           Supprimer la photo de profil
@@ -55,6 +59,7 @@
             id="nom"
             name="Nom"
             v-model="nom"
+            title="Nom"
             disabled
           />
           <input
@@ -63,6 +68,7 @@
             type="text"
             id="nom"
             name="Nom"
+            title="Nom"
             v-model="nom"
             required
           />
@@ -73,6 +79,7 @@
             type="text"
             id="prenom"
             name="Prenom"
+            title="Prenom"
             v-model="prenom"
             disabled
           />
@@ -82,6 +89,7 @@
             type="text"
             id="prenom"
             name="Prenom"
+            title="Prenom"
             v-model="prenom"
             required
           />
@@ -92,6 +100,7 @@
             type="text"
             id="poste"
             name="Poste"
+            title="Poste"
             v-model="poste"
             disabled
           />
@@ -101,6 +110,7 @@
             type="text"
             id="poste"
             name="Poste"
+            title="Poste"
             v-model="poste"
             required
           />
@@ -111,6 +121,7 @@
             type="text"
             id="email"
             name="Email"
+            title="Email"
             v-model="email"
             disabled
           />
@@ -120,6 +131,7 @@
             type="text"
             id="email"
             name="Email"
+            title="Email"
             v-model="email"
             required
           />

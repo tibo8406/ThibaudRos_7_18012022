@@ -77,25 +77,6 @@ img {
     max-width: 45%;
   }
 }
-input[type="text"] {
-  display: grid;
-  box-sizing: border-box;
-  outline: none;
-  color: #fc2e07;
-  font-size: 20px;
-  border-radius: 8px;
-  border: 1px solid #fc846c;
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
-  &::placeholder {
-    color: #fcb7a6;
-  }
-  &:focus {
-    border-radius: 8px;
-    border: 1px solid #fc2e07;
-    background-color: #fcb7a6;
-  }
-}
 
 .forgot {
   padding: 25px 5px 25px 5px;

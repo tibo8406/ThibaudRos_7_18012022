@@ -16,6 +16,7 @@
           id="nom"
           name="Nom"
           placeholder="Nom"
+          title="Nom"
           v-model="nom"
           required
         />
@@ -24,6 +25,7 @@
           id="prenom"
           name="prenom"
           placeholder="Prenom"
+          title="Prenom"
           v-model="prenom"
           required
         />
@@ -34,6 +36,7 @@
           id="poste"
           name="poste"
           placeholder="Poste"
+          title="Poste"
           v-model="poste"
           required
         />
@@ -45,6 +48,7 @@
           name="Email"
           v-model="email"
           placeholder="Email"
+          title="Email"
           required
         />
       </div>
@@ -54,13 +58,20 @@
           id="password"
           name="password"
           placeholder="Password"
+          title="mot de passe"
           v-model="password"
           required
         />
       </div>
 
       <div class="button">
-<button @click.prevent="signup()" class="submit" :class="{ 'submit--disabled': !validatedFields }">S'inscrire</button>
+        <button
+          @click.prevent="signup()"
+          class="submit"
+          :class="{ 'submit--disabled': !validatedFields }"
+        >
+          S'inscrire
+        </button>
       </div>
     </form>
   </div>
@@ -79,9 +90,15 @@ export default {
       poste: "",
     };
   },
-    computed: {
+  computed: {
     validatedFields: function () {
-      if (this.email != "" && this.password != "" && this.nom != "" && this.prenom != "" && this.poste != ""  ) {
+      if (
+        this.email != "" &&
+        this.password != "" &&
+        this.nom != "" &&
+        this.prenom != "" &&
+        this.poste != ""
+      ) {
         return true;
       } else {
         return false;
@@ -99,7 +116,7 @@ export default {
           poste: this.poste,
         })
         .then(function () {
-          router.push('SocialGroup');
+          router.push("SocialGroup");
         })
         .catch(function (error) {
           console.log(error);
@@ -133,31 +150,7 @@ img {
   padding: 25px;
   box-shadow: #fcb7a6;
 }
-.form_option {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  list-style: none;
-  li a {
-    border: 1px solid #fc2e07;
-    font-weight: bold;
-    display: grid;
-    text-decoration: none;
-    color: #fc846c;
-    font-size: 1.1rem;
-    padding: 15px;
-    text-align: center;
-    cursor: pointer;
-    transition: 0.5s ease;
-    &:hover {
-      background: #fc846c;
-      color: white;
-    }
-  }
-  .active a {
-    background: rgb(252, 46, 7);
-    color: white;
-  }
-}
+
 .option {
   active {
     font-size: 20px;
@@ -175,25 +168,6 @@ img {
   justify-content: space-between;
   input {
     max-width: 45%;
-  }
-}
-input[type="text"] {
-  /*display: grid;
-  box-sizing: border-box;
-  outline: none;
-  color: #fc2e07;
-  font-size: 20px;
-  border-radius: 8px;
-  border: 1px solid #fc846c;
-  -webkit-transition: 0.5s;
-  transition: 0.5s;*/
-  &::placeholder {
-    color: #fcb7a6;
-  }
-  &:focus {
-    border-radius: 8px;
-    border: 1px solid #fc2e07;
-    background-color: #fcb7a6;
   }
 }
 

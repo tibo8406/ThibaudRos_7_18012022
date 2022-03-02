@@ -1,9 +1,9 @@
 <template>
   <div class="form_">
     <div class="form_title">
-      <h1>Poster {{ name }}</h1>
+Poster {{ name }}
     </div>
-    <form>
+    <div>
       <div class="postMessage">
         <textarea
           name="messages"
@@ -11,22 +11,26 @@
           rows="4"
           id="messages"
           placeholder=" ... votre message"
+          title="le message que vous voulez poster"
           v-model="messages"
           required
         ></textarea>
       </div>
       <div class="addImg" v-if="!image">
-        <label for="file" class="label-file"
-          ><i class="fa fa-solid fa-image"></i></label>
+        <div for="file" class="label-file"
+          ><i class="fa fa-solid fa-image"></i></div>
         <input
           type="file"
           id="file"
           class="input-file"
+  
+          title="Choisir une image"
+          alt="l'image que vous allez poster"
           @change="onFileChange"
         />
       </div>
       <div class="postImg" v-else>
-        <img :src="image" />
+        <img :src="image" alt="l'image que vous allez poster"/>
         <button class="button-file" @click="removeurlMedia">
           Supprimer l'image
         </button>
@@ -38,7 +42,7 @@
       >
         Poster
       </button>
-    </form>
+    </div>
   </div>
 </template>
 

@@ -1,10 +1,21 @@
 <template>
   <div class="Socialgroup">
     <div class="headerSocial">
-      <span
-        ><i @click="showUserAccount()" class="fa fa-solid fa-user"></i
-      ></span>
-      <span><i @click="logOut()" class="fa fa-solid fa-door-open"></i></span>
+      <span>
+        <i
+          @click="showUserAccount()"
+          class="fa fa-solid fa-user"
+          alt="Modifier mes informations utilisateurs"
+        ></i>
+      </span>
+      <span>
+        <i
+          @click="logOut()"
+          class="fa fa-solid fa-door-open"
+          alt="Se déconnecter"
+        >
+        </i>
+        </span>
     </div>
     Bienvenue <b>{{ $store.getters.completeUserName }}</b>
     <Post />
@@ -13,8 +24,8 @@
 </template>
 
 <script>
-import Post from '../components/Post.vue';
-import postView from '../components/postView.vue';
+import Post from "../components/Post.vue";
+import postView from "../components/postView.vue";
 
 import router from "../router/index";
 import axios from "axios";
@@ -83,8 +94,8 @@ export default {
 </script>
 
 <style lang="scss">
-body{
-margin: 0;
+body {
+  margin: 0;
 }
 .fa {
   font-size: 50px;
@@ -100,6 +111,7 @@ margin: 0;
   display: flex;
   justify-content: space-evenly;
   margin: auto;
+  color: #595959;
 }
 .wall {
   padding-top: 60px;
@@ -107,9 +119,6 @@ margin: 0;
   justify-items: center;
   background-color: rgb(252, 228, 228, 0.3);
   min-height: 92vh;
-    padding-bottom: 45px;
-
+  padding-bottom: 45px;
 }
-
-
 </style>

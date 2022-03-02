@@ -2,7 +2,7 @@
   <div class="wall">
     <div class="post" v-for="post in posts" :key="post.id">
       <div class="post_user">
-        <div class="post_user_pic"><img :src="post.createur.urlImg" /></div>
+        <div class="post_user_pic"><img :src="post.createur.urlImg" alt="Photo de profil d'un utilisateur" /></div>
         <div class="post_user_info">
           <div class="post_user_info_name">
             {{ post.createur.prenom }} {{ post.createur.nom }}
@@ -12,16 +12,17 @@
       </div>
       <div class="post_content">
         <div class="post_content_text">{{ post.messages }}</div>
-        <div class="post_content_media"><img :src="post.urlMedia" /></div>
+        <div class="post_content_media"><img :src="post.urlMedia" title="" alt="" /></div>
       </div>
       <commentPost :comment="post.comments" />
       <div class="comment">
         <div class="comment_user_pic">
-          <img :src="$store.state.userImg" />
+          <img :src="$store.state.userImg" alt="Votre photo de profil"/>
         </div>
         <div class="comment_action">
           <textarea
             v-model="textarea[post.id]"
+            title="Ecrire ici votre commentaire"
             placeholder=" ... votre commentaire"
             @keyup.enter="postComment(post.id)"
           >

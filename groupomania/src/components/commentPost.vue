@@ -2,7 +2,7 @@
   <div class="content_comments">
     <div class="content_comments" v-for="c in comment" :key="c.id">
       <div class="post_user">
-        <div class="post_user_pic"><img :src="c.createur.urlImg" /></div>
+        <div class="post_user_pic"><img :src="c.createur.urlImg" alt="Photo de profil d'un utilisateur"/></div>
         <div class="post_user_info">
           <div class="post_user_info_name">
             {{ c.createur.nom }} {{ c.createur.prenom }}
@@ -76,7 +76,7 @@ export default {
       height: 23px;
       background: rgba($color: silver, $alpha: 0.25);
       width: 100%;
-      color: grey;
+      color: #595959;
       border: none;
       &:focus {
         background: rgba($color: silver, $alpha: 0.25);
@@ -103,7 +103,7 @@ export default {
       &:hover {
         cursor: pointer;
         background: rgba($color: silver, $alpha: 0.25);
-        color: grey;
+        color: #595959;
       }
     }
     &_comment {
@@ -116,7 +116,7 @@ export default {
       &:hover {
         cursor: pointer;
         background: rgba($color: silver, $alpha: 0.25);
-        color: grey;
+        color: #595959;
       }
     }
   }

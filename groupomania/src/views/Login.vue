@@ -7,7 +7,7 @@
       </li>
     </div>
     <div class="form_title">
-      <h1>Connexion</h1>
+      Connexion
     </div>
     <form>
       <div class="ligne1champs">
@@ -16,6 +16,7 @@
           id="email"
           name="Email"
           placeholder="Email"
+          title="email"
           v-model="email"
           required
         />
@@ -26,6 +27,7 @@
           id="password"
           name="password"
           placeholder="Password"
+          title="mot de passe"
           v-model="password"
           required
         />
@@ -39,8 +41,7 @@
           :class="{ 'submit--disabled': !validatedFields }"
           @click.prevent="login()"
         >
-          Se connecter
-        </button>
+Je me connecte        </button>
       </div>
     </form>
   </div>
@@ -118,8 +119,12 @@ img {
   margin-top: 40px;
   padding: 25px;
   box-shadow: #fcb7a6;
+  &title{
+font-size: 30px;
+font-weight: bold;
+margin-top: 25px;
 }
-.form_option {
+  &option {
   display: grid;
   grid-template-columns: 1fr 1fr;
   list-style: none;
@@ -129,7 +134,7 @@ img {
     display: grid;
     text-decoration: none;
     color: #fc846c;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     padding: 15px;
     text-align: center;
     cursor: pointer;
@@ -139,6 +144,8 @@ img {
       color: white;
     }
   }
+}
+.form
   .active a {
     background: rgb(252, 46, 7);
     color: white;
@@ -163,25 +170,7 @@ img {
     max-width: 45%;
   }
 }
-input {
-  display: grid;
-  box-sizing: border-box;
-  outline: none;
-  color: #fc2e07;
-  font-size: 20px;
-  border-radius: 8px;
-  border: 1px solid #fc846c;
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
-  &::placeholder {
-    color: #fcb7a6;
-  }
-  &:focus {
-    border-radius: 8px;
-    border: 1px solid #fc2e07;
-    background-color: #fcb7a6;
-  }
-}
+
 
 .submit {
   margin: auto auto 10px auto;

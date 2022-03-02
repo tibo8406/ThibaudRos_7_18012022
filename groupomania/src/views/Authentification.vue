@@ -12,30 +12,7 @@
   padding: 25px;
   border: 2px solid #fcb7a6;
 }
-.form_option {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  list-style: none;
-  li a {
-    font-weight: bold;
-    display: grid;
-    text-decoration: none;
-    color: #fc846c;
-    font-size: 1.1rem;
-    padding: 15px;
-    text-align: center;
-    cursor: pointer;
-    transition: 0.5s ease;
-    &:hover {
-      background: #fc846c;
-      color: white;
-    }
-  }
-  .active a {
-    background: #fc2e07;
-    color: white;
-  }
-}
+
 .option {
   active {
     font-size: 20px;
@@ -56,11 +33,11 @@
     max-width: 45%;
   }
 }
-input[type="text"] {
+input {
   display: grid;
   box-sizing: border-box;
   outline: none;
-  color: #fc2e07;
+  color: #595959;
   font-size: 20px;
   border-radius: 8px;
   border: 1px solid #fc846c;
@@ -71,7 +48,7 @@ input[type="text"] {
   }
   &:focus {
     border-radius: 8px;
-    border: 1px solid #fc2e07;
+    border: 1px solid #ff2a00;
     background-color: #fcb7a6;
   }
 }

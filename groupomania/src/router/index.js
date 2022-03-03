@@ -22,12 +22,18 @@ const routes = [
     { path: '/', component: App, redirect: 'Login' },
     { path: '/Auth', component: Authentification, redirect: 'Login' },
     { path: '/Login', component: Login },
-    { path: '/SocialGroup', component: SocialGroup, },
     { path: '/Signup', component: Signup, },
-    { path: '/Post', component: Post, },
+    {
+        path: '/SocialGroup',
+        component: SocialGroup,
+        children: [
+            { path: 'Post', component: Post, },
+            { path: 'commentPost', component: commentPost, },
+            { path: 'postView', component: postView, }
+        ]
+    },
     { path: '/useraccount', component: UserAccount, },
-    { path: '/commentPost', component: commentPost, },
-    { path: '/postView', component: postView, }
+
 
     /*{path: '/',
     name: 'App',

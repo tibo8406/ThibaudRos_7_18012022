@@ -2,7 +2,7 @@
   <div class="content_comments">
     <div class="content_comments" v-for="c in comment" :key="c.id">
       <div class="post_user">
-        <div class="post_user_pic"><img :src="c.createur.urlImg" alt="Photo de profil d'un utilisateur"/></div>
+        <div class="post_user_pic"><img :src="c.createur.urlImg" :alt='"Photo de profil de "+c.createur.prenom+" "+c.createur.nom'/></div>
         <div class="post_user_info">
           <div class="post_user_info_name">
             {{ c.createur.nom }} {{ c.createur.prenom }}
@@ -17,7 +17,8 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+//import axios from "axios";
+
 export default {
   props: ["comment"],
   name: "commentPost",
@@ -25,27 +26,6 @@ export default {
     return {
       textarea: [],
     };
-  },
-
-  methods: {
-    postComment(id) {
-      axios
-        .post(
-          "http://localhost:3000/api/posts/" + id + "/comment",
-          { message: this.textarea[id] },
-          {
-            headers: {
-              Authorization: "Bearer " + this.$store.state.userToken,
-            },
-          }
-        )
-        .then(() => {
-          window.location.reload();
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
   },
 };
 </script>

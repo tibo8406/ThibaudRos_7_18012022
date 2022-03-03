@@ -2,7 +2,12 @@
   <div class="wall">
     <div class="post" v-for="post in posts" :key="post.id">
       <div class="post_user">
-        <div class="post_user_pic"><img :src="post.createur.urlImg" alt="Photo de profil d'un utilisateur" /></div>
+        <div class="post_user_pic">
+          <img
+            :src="post.createur.urlImg"
+            :alt='"Photo de profil de "+post.createur.prenom+" "+post.createur.nom'
+          />
+        </div>
         <div class="post_user_info">
           <div class="post_user_info_name">
             {{ post.createur.prenom }} {{ post.createur.nom }}
@@ -12,12 +17,14 @@
       </div>
       <div class="post_content">
         <div class="post_content_text">{{ post.messages }}</div>
-        <div class="post_content_media"><img :src="post.urlMedia" title="" alt="" /></div>
+        <div class="post_content_media" v-if="post.urlMedia!=null" >
+          <img :src="post.urlMedia" title="" :alt='"Photo du post N° "+post.id'/>
+        </div>
       </div>
       <commentPost :comment="post.comments" />
       <div class="comment">
         <div class="comment_user_pic">
-          <img :src="$store.state.userImg" alt="Votre photo de profil"/>
+          <img :src="$store.state.userImg" alt="Votre photo de profil" />
         </div>
         <div class="comment_action">
           <textarea
@@ -47,7 +54,7 @@ export default {
   },
   data() {
     return {
-        textarea:[],
+      textarea: [],
     };
   },
   methods: {
@@ -63,14 +70,13 @@ export default {
           }
         )
         .then(() => {
-          window.location.reload();
+          location.reload();
         })
         .catch(function (error) {
           console.log(error);
         });
     },
   },
-
 };
 </script>
 <style lang="scss">
@@ -146,6 +152,5 @@ export default {
       }
     }
   }
-  
 }
 </style>

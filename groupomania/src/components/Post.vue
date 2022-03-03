@@ -1,8 +1,6 @@
 <template>
   <div class="form_">
-    <div class="form_title">
-Poster {{ name }}
-    </div>
+    <div class="form_title">Poster {{ name }}</div>
     <div>
       <div class="postMessage">
         <textarea
@@ -17,20 +15,19 @@ Poster {{ name }}
         ></textarea>
       </div>
       <div class="addImg" v-if="!image">
-        <div for="file" class="label-file"
-          ><i class="fa fa-solid fa-image"></i></div>
+        <div for="file" class="label-file">
+          <i class="fa fa-solid fa-image"></i>
+        </div>
         <input
           type="file"
           id="file"
           class="input-file"
-  
           title="Choisir une image"
-          alt="l'image que vous allez poster"
           @change="onFileChange"
         />
       </div>
       <div class="postImg" v-else>
-        <img :src="image" alt="l'image que vous allez poster"/>
+        <img :src="image" alt="l'image que vous allez poster" />
         <button class="button-file" @click="removeurlMedia">
           Supprimer l'image
         </button>
@@ -51,9 +48,7 @@ import router from "../router/index";
 
 import axios from "axios";
 export default {
-  props:[
-    "name"
-  ],
+  props: ["name"],
   beforeCreate() {
     if (sessionStorage.loggedIn != "OnLine") {
       router.push("Login");
@@ -69,7 +64,12 @@ export default {
     }
   },
   data() {
-    return { fileImg: {}, messages: "", image: "" };
+    return {
+      fileImg: {},
+      messages: "",
+      image: "",
+      postKey: 0,
+    };
   },
   computed: {
     validatedPostFields: function () {

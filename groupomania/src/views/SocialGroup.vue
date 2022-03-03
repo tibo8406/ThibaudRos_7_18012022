@@ -15,11 +15,11 @@
           alt="Se déconnecter"
         >
         </i>
-        </span>
+      </span>
     </div>
     Bienvenue <b>{{ $store.getters.completeUserName }}</b>
-    <Post />
-    <postView :posts="posts" />
+    <Post></Post>
+    <postView :posts="posts"></postView>
   </div>
 </template>
 
